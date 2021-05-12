@@ -134,7 +134,7 @@ def create_topology(controllers, options):
     return topology
 
 def create_system(options, full_system, system, piobus = None, dma_ports = []):
-
+    print ("fanxi added 0511, in Ruby.py, create_system (options, full_system...")
     system.ruby = RubySystem()
     ruby = system.ruby
 

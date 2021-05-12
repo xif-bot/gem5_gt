@@ -54,6 +54,7 @@ Network::Network(const Params *p)
 {
     m_virtual_networks = p->number_of_virtual_networks;
     m_control_msg_size = p->control_msg_size;
+    std::cout << "fanxi added 0512, in Network.cc, m_virtual_networks = "<< m_virtual_networks<< std::endl;
 
     // Total nodes/controllers in network
     // Must make sure this is called after the State Machine constructors

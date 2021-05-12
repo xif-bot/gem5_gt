@@ -91,7 +91,7 @@ def define_options(parser):
 
 
 def create_network(options, ruby):
-
+    print ("fanxi added 0511, in network.py, create_network(options, ruby)")
     # Set the network classes based on the command line options
     if options.network == "garnet2.0":
         NetworkClass = GarnetNetwork
@@ -116,6 +116,7 @@ def create_network(options, ruby):
 
 def init_network(options, network, InterfaceClass):
 
+    print ("fanxi added 0511, in Network.py, in func init_network()")
     if options.network == "garnet2.0":
         network.num_rows = options.mesh_rows
         network.ni_flit_size = options.link_width_bits / 8

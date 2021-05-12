@@ -74,6 +74,7 @@ GarnetSyntheticTraffic::sendPkt(PacketPtr pkt)
     numPacketsSent++;
 }
 
+// fanxitodo: change the vnet setting choice
 GarnetSyntheticTraffic::GarnetSyntheticTraffic(const Params *p)
     : MemObject(p),
       tickEvent([this]{ tick(); }, "GarnetSyntheticTraffic tick",
@@ -284,7 +285,7 @@ GarnetSyntheticTraffic::generatePkt()
     // Vnet 2 is for data packets (5-flit)
     int injReqType = injVnet;
 
-    if (injReqType < 0 || injReqType > 2)
+    if (injReqType==-1) // -1 代表random(0,2),其他代表自己本身
     {
         // randomly inject in any vnet
         injReqType = random_mt.random(0, 2);

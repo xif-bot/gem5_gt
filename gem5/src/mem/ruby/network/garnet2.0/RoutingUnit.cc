@@ -391,10 +391,51 @@ RoutingUnit::outportComputeCustom(RouteInfo route,
     int my_id = m_router->get_id();
     int src_id = route.src_router;
     int dest_id = route.dest_router;
-    //DPRINTF(Cache,"My id: %i\n", my_id);
-    //DPRINTF(Cache,"Src id: %i\n", src_id);
-    //DPRINTF(Cache,"Dest id: %i\n", dest_id);
-    GarnetNetwork* network = m_router->get_net_ptr();
+
+    //  a simple implementation of xy routing
+    std::cout << "fanxi added in RoutingUnit.cc, in func outportComputeCustom" << std::endl;
+    std::cout << "route.vnet" << route.vnet << std::endl;
+    std::cout << "my_id" << my_id << std::endl;
+    std::cout << "src_id" << src_id << std::endl;
+    std::cout << "dest_id" << dest_id << std::endl;
+
+    PortDirection outport_dirn = "Unknown";
+    int M5_VAR_USED num_rows = m_router->get_net_ptr()->getNumRows();
+    int num_cols = m_router->get_net_ptr()->getNumCols();
+
+    assert(num_rows > 0 && num_cols > 0);
+    int my_x = my_id % num_cols;
+    int my_y = my_id / num_cols;
+    int dest_x = dest_id % num_cols;
+    int dest_y = dest_id / num_cols;
+
+    int x_hops = abs(dest_x - my_x);
+    int y_hops = abs(dest_y - my_y);
+
+    bool x_dirn = (dest_x >= my_x);
+    bool y_dirn = (dest_y >= my_y);
+    assert(!(x_hops == 0 && y_hops == 0));
+
+    if (x_hops != 0)
+    {
+        if (x_dirn > 0)
+            outport_dirn = "East";
+        else
+            outport_dirn = "West";
+    }
+    else if (y_hops != 0)
+    {
+        if (y_dirn > 0)
+            outport_dirn = "North";
+        else
+            outport_dirn = "South";
+    }
+
+    std::cout << "outport_dirn" << outport_dirn << std::endl;
+    return m_outports_dirn2idx[outport_dirn];
+    
+
+    /* GarnetNetwork* network = m_router->get_net_ptr();
     std::map <std::pair<int, int>,std::list<int>> table = network->m_routing_table_real;
     std::list<int> listRouters = table[std::make_pair(src_id,dest_id)];
     bool findThisValue = false;
@@ -426,5 +467,5 @@ RoutingUnit::outportComputeCustom(RouteInfo route,
     }
     else{
         return -1;
-    }
+    }  */
 }

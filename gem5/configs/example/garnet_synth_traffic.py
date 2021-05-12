@@ -80,6 +80,10 @@ parser.add_option("--inj-vnet", type="int", default=-1,
                         0 and 1 are 1-flit, 2 is 5-flit.\
                         Set to -1 to inject randomly in all vnets.")
 
+parser.add_option("--num_vnets", type='int', default = 3,
+                  help="0,1 for config type, 2 & 2+ for data type"
+                  )
+
 #
 # Add the ruby specific and protocol specific options
 #
@@ -94,11 +98,11 @@ if args:
      sys.exit(1)
 
 
-if options.inj_vnet > 2:
-    print "Error: Injection vnet %d should be 0 (1-flit), 1 (1-flit) \
-                  or 2 (5-flit) or -1 (random)"\
-           % (options.inj_vnet)
-    sys.exit(1)
+# if options.inj_vnet > 2:
+#     print "Error: Injection vnet %d should be 0 (1-flit), 1 (1-flit) \
+#                   or 2 (5-flit) or -1 (random)"\
+#            % (options.inj_vnet)
+#     sys.exit(1)
 
 
 cpus = [ GarnetSyntheticTraffic(
@@ -123,6 +127,9 @@ system.voltage_domain = VoltageDomain(voltage = options.sys_voltage)
 system.clk_domain = SrcClockDomain(clock = options.sys_clock,
                                    voltage_domain = system.voltage_domain)
 
+print ("fanxi added 0511, in garnet_synth_trafffic.py, Ruby.create_system()")
+print ("\nruby system options:", options)
+print ("\n")
 Ruby.create_system(options, False, system)
 
 # Create a seperate clock domain for Ruby

@@ -59,6 +59,9 @@ using m5::stl_helpers::deletePointers;
 GarnetNetwork::GarnetNetwork(const Params *p)
     : Network(p)
 {
+    std::cout << "fanxi added 0511, in GarnetNetwork.cc in GarnetNetwork" <<std::endl;
+    std::cout << "garnetNetwork, m_routing_algorithm: " << p->routing_algorithm  <<std::endl;
+    
     m_num_rows = p->num_rows;
     m_ni_flit_size = p->ni_flit_size;
     m_vcs_per_vnet = p->vcs_per_vnet;
@@ -72,6 +75,8 @@ GarnetNetwork::GarnetNetwork(const Params *p)
         fault_model = p->fault_model;
 
     m_vnet_type.resize(m_virtual_networks);
+    std::cout << "fanxi added 0512, in GarnetNetwork.cc, m_virtual_networks = " << m_virtual_networks<< std::endl;
+    
 
     int init = -1;
     int end = -1;
@@ -120,10 +125,17 @@ GarnetNetwork::GarnetNetwork(const Params *p)
     }
 
     for (int i = 0 ; i < m_virtual_networks ; i++) {
-        if (m_vnet_type_names[i] == "response")
+        std::cout << "fanxi added 0512 in GarnetNetwork.cc, m_vnet_type_names[" << i<< "]="<<m_vnet_type_names[i]<<std::endl;
+
+        // fanxi modified 0522: change all vnet to data type 
+        // vnet 0和1维持control type，2及以后都是data type
+        
+        if (m_vnet_type_names[i] == "response" || m_vnet_type_names[i] == "")
             m_vnet_type[i] = DATA_VNET_; // carries data (and ctrl) packets
         else
             m_vnet_type[i] = CTRL_VNET_; // carries only ctrl packets
+        std::cout << "fanxi added 0512 in GarnetNetwork.cc, m_vnet_type[" << i<< "]="<<m_vnet_type[i]<<std::endl;
+
     }
 
     // record the routers

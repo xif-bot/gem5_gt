@@ -1,4 +1,8 @@
 # README #
+
+## NOTICE ##
+This repo is used for implement and test the routerless NoC.
+
 Last Updated: November 27, 2020
 
 This is updated Georgia Tech internal gem5 repository used by Tushar Krishna (http://tusharkrishna.ece.gatech.edu) for his Interconnection Networks course.

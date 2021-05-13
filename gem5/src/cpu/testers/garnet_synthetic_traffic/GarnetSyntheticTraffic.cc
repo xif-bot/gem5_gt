@@ -290,6 +290,10 @@ GarnetSyntheticTraffic::generatePkt()
         // randomly inject in any vnet
         injReqType = random_mt.random(0, 2);
     }
+    if (injReqType==-2) // -2 代表random(2,所有vnets)
+    {
+        injReqType = random_mt.random(2, 9); //fanxitodo:传输参数进来
+    }
 
     if (injReqType == 0) {
         // generate packet for virtual network 0
@@ -302,9 +306,75 @@ GarnetSyntheticTraffic::generatePkt()
         req = new Request(
             0, 0x0, access_size, flags, masterId, 0x0, 0);
         req->setPaddr(paddr);
-    } else {  // if (injReqType == 2)
+    } 
+    else if (injReqType == 2) {
         // generate packet for virtual network 2
         requestType = MemCmd::WriteReq;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else  if (injReqType == 3) {
+        requestType = MemCmd::WriteReq1;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else  if (injReqType == 4) {
+        requestType = MemCmd::WriteReq2;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else if (injReqType == 5) {
+        requestType = MemCmd::WriteReq3;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else if (injReqType == 6) {
+        requestType = MemCmd::WriteReq4;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else if (injReqType == 7) {
+        requestType = MemCmd::WriteReq5;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+
+    else if (injReqType == 8) {
+        requestType = MemCmd::WriteReq6;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else if (injReqType == 9) {
+        requestType = MemCmd::WriteReq7;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else if (injReqType == 10) {
+        requestType = MemCmd::WriteReq8;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else if (injReqType == 11) {
+        requestType = MemCmd::WriteReq9;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else if (injReqType == 12) {
+        requestType = MemCmd::WriteReq10;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else if (injReqType == 13) {
+        requestType = MemCmd::WriteReq11;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else if (injReqType == 14) {
+        requestType = MemCmd::WriteReq12;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else if (injReqType == 15) {
+        requestType = MemCmd::WriteReq13;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else if (injReqType == 16) {
+        requestType = MemCmd::WriteReq14;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else if (injReqType == 17) {
+        requestType = MemCmd::WriteReq15;
+        req = new Request(paddr, access_size, flags, masterId);
+    }
+    else if (injReqType == 18) {
+        requestType = MemCmd::WriteReq16;
         req = new Request(paddr, access_size, flags, masterId);
     }
 

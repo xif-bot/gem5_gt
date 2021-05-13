@@ -42,6 +42,22 @@ machine(MachineType:L1Cache, "Garnet_standalone L1 Cache")
             vnet_type = "forward";
       MessageBuffer * responseFromCache, network="To", virtual_network="2",
             vnet_type = "response";
+      MessageBuffer * responseFromCache1, network="To",   virtual_network="3",    vnet_type = "response1";
+      MessageBuffer * responseFromCache2, network="To",   virtual_network="4",    vnet_type = "response2";
+      MessageBuffer * responseFromCache3, network="To",   virtual_network="5",    vnet_type = "response3";
+      MessageBuffer * responseFromCache4, network="To",   virtual_network="6",    vnet_type = "response4";
+      MessageBuffer * responseFromCache5, network="To",   virtual_network="7",    vnet_type = "response5";
+      MessageBuffer * responseFromCache6, network="To",   virtual_network="8",    vnet_type = "response6";
+      MessageBuffer * responseFromCache7, network="To",   virtual_network="9",    vnet_type = "response7";
+      MessageBuffer * responseFromCache8, network="To",   virtual_network="10",   vnet_type = "response8";
+      MessageBuffer * responseFromCache9, network="To",   virtual_network="11",   vnet_type = "response9";
+      MessageBuffer * responseFromCache10, network="To",  virtual_network="12",   vnet_type = "response10";
+      MessageBuffer * responseFromCache11, network="To",  virtual_network="13",   vnet_type = "response11";
+      MessageBuffer * responseFromCache12, network="To",  virtual_network="14",   vnet_type = "response12";
+      MessageBuffer * responseFromCache13, network="To",  virtual_network="15",   vnet_type = "response13";
+      MessageBuffer * responseFromCache14, network="To",  virtual_network="16",   vnet_type = "response14";
+      MessageBuffer * responseFromCache15, network="To",  virtual_network="17",   vnet_type = "response15";
+      MessageBuffer * responseFromCache16, network="To",  virtual_network="18",   vnet_type = "response16";
 
       MessageBuffer * mandatoryQueue;
 {
@@ -56,6 +72,23 @@ machine(MachineType:L1Cache, "Garnet_standalone L1 Cache")
     Request,    desc="Request from Garnet_standalone";
     Forward,    desc="Forward from Garnet_standalone";
     Response,   desc="Response from Garnet_standalone";
+    Response1,    desc="Response from Garnet_standalone";
+    Response2,    desc="Response from Garnet_standalone";
+    Response3,    desc="Response from Garnet_standalone";
+    Response4,    desc="Response from Garnet_standalone";
+    Response5,    desc="Response from Garnet_standalone";
+    Response6,    desc="Response from Garnet_standalone";
+    Response7,    desc="Response from Garnet_standalone";
+    Response8,    desc="Response from Garnet_standalone";
+    Response9,    desc="Response from Garnet_standalone";
+    Response10,   desc="Response from Garnet_standalone";
+    Response11,   desc="Response from Garnet_standalone";
+    Response12,   desc="Response from Garnet_standalone";
+    Response13,   desc="Response from Garnet_standalone";
+    Response14,   desc="Response from Garnet_standalone";
+    Response15,   desc="Response from Garnet_standalone";
+    Response16,   desc="Response from Garnet_standalone";
+    
   }
 
   // STRUCTURE DEFINITIONS
@@ -90,6 +123,22 @@ machine(MachineType:L1Cache, "Garnet_standalone L1 Cache")
       return Event:Forward;
     } else if (type == RubyRequestType:ST) {
       return Event:Response;
+    } else if (type == RubyRequestType:ST1) {      return Event:Response1;    
+    } else if (type == RubyRequestType:ST2) {      return Event:Response2;
+    } else if (type == RubyRequestType:ST3) {      return Event:Response3;
+    } else if (type == RubyRequestType:ST4) {      return Event:Response4;    
+    } else if (type == RubyRequestType:ST5) {      return Event:Response5;
+    } else if (type == RubyRequestType:ST6) {      return Event:Response6;
+    } else if (type == RubyRequestType:ST7) {      return Event:Response7;    
+    } else if (type == RubyRequestType:ST8) {      return Event:Response8;
+    } else if (type == RubyRequestType:ST9) {      return Event:Response9;
+    } else if (type == RubyRequestType:ST10) {      return Event:Response10;
+    } else if (type == RubyRequestType:ST11) {      return Event:Response11;    
+    } else if (type == RubyRequestType:ST12) {      return Event:Response12;
+    } else if (type == RubyRequestType:ST13) {      return Event:Response13;
+    } else if (type == RubyRequestType:ST14) {      return Event:Response14;    
+    } else if (type == RubyRequestType:ST15) {      return Event:Response15;
+    } else if (type == RubyRequestType:ST16) {      return Event:Response16;
     } else {
       error("Invalid RubyRequestType");
     }
@@ -128,6 +177,22 @@ machine(MachineType:L1Cache, "Garnet_standalone L1 Cache")
   out_port(requestNetwork_out, RequestMsg, requestFromCache);
   out_port(forwardNetwork_out, RequestMsg, forwardFromCache);
   out_port(responseNetwork_out, RequestMsg, responseFromCache);
+  out_port(responseNetwork_out1, RequestMsg, responseFromCache1);
+  out_port(responseNetwork_out2, RequestMsg, responseFromCache2);
+  out_port(responseNetwork_out3, RequestMsg, responseFromCache3);
+  out_port(responseNetwork_out4, RequestMsg, responseFromCache4);
+  out_port(responseNetwork_out5, RequestMsg, responseFromCache5);
+  out_port(responseNetwork_out6, RequestMsg, responseFromCache6);
+  out_port(responseNetwork_out7, RequestMsg, responseFromCache7);
+  out_port(responseNetwork_out8, RequestMsg, responseFromCache8);
+  out_port(responseNetwork_out9, RequestMsg, responseFromCache9);
+  out_port(responseNetwork_out10, RequestMsg, responseFromCache10);
+  out_port(responseNetwork_out11, RequestMsg, responseFromCache11);
+  out_port(responseNetwork_out12, RequestMsg, responseFromCache12);
+  out_port(responseNetwork_out13, RequestMsg, responseFromCache13);
+  out_port(responseNetwork_out14, RequestMsg, responseFromCache14);
+  out_port(responseNetwork_out15, RequestMsg, responseFromCache15);
+  out_port(responseNetwork_out16, RequestMsg, responseFromCache16);
 
   // Mandatory Queue
   in_port(mandatoryQueue_in, RubyRequest, mandatoryQueue, desc="...") {
@@ -179,6 +244,179 @@ machine(MachineType:L1Cache, "Garnet_standalone L1 Cache")
     }
   }
 
+  action(c_issueResponse1, "c1", desc="Issue a response1") {
+    enqueue(responseNetwork_out1, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+
+  action(c_issueResponse2, "c2", desc="Issue a response2") {
+    enqueue(responseNetwork_out2, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+
+  action(c_issueResponse3, "c3", desc="Issue a response3") {
+    enqueue(responseNetwork_out3, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+
+  //4
+  action(c_issueResponse4, "c4", desc="Issue a response4") {
+    enqueue(responseNetwork_out4, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+
+  //5
+  action(c_issueResponse5, "c5", desc="Issue a response5") {
+    enqueue(responseNetwork_out5, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+
+  //6
+  action(c_issueResponse6, "c6", desc="Issue a response6") {
+    enqueue(responseNetwork_out6, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+
+  //7
+  action(c_issueResponse7, "c7", desc="Issue a response7") {
+    enqueue(responseNetwork_out7, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+
+  //8
+  action(c_issueResponse8, "c8", desc="Issue a response8") {
+    enqueue(responseNetwork_out8, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+
+  //9
+  action(c_issueResponse9, "c9", desc="Issue a response9") {
+    enqueue(responseNetwork_out9, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+
+  //10
+  action(c_issueResponse10, "c10", desc="Issue a response10") {
+    enqueue(responseNetwork_out10, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+
+  //11
+  action(c_issueResponse11, "c11", desc="Issue a response11") {
+    enqueue(responseNetwork_out11, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+
+  //12
+  action(c_issueResponse12, "c12", desc="Issue a response12") {
+    enqueue(responseNetwork_out12, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+
+  //13
+  action(c_issueResponse13, "c13", desc="Issue a response13") {
+    enqueue(responseNetwork_out13, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+  
+  //14
+  action(c_issueResponse14, "c14", desc="Issue a response14") {
+    enqueue(responseNetwork_out14, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+  
+  //15
+  action(c_issueResponse15, "c15", desc="Issue a response15") {
+    enqueue(responseNetwork_out15, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+
+  //16
+  action(c_issueResponse16, "c16", desc="Issue a response16") {
+    enqueue(responseNetwork_out16, RequestMsg, issue_latency) {
+      out_msg.addr := address;
+      out_msg.Type := CoherenceRequestType:MSG;
+      out_msg.Requestor := machineID;
+      out_msg.Destination.add(mapAddressToMachine(address, MachineType:Directory));
+      out_msg.MessageSize := MessageSizeType:Data;
+    }
+  }
+
   action(m_popMandatoryQueue, "m", desc="Pop the mandatory request queue") {
     mandatoryQueue_in.dequeue(clockEdge());
   }
@@ -204,6 +442,23 @@ machine(MachineType:L1Cache, "Garnet_standalone L1 Cache")
     m_popMandatoryQueue;
   }
 
+  transition(I, Response1) {    s_store_hit;    c_issueResponse1;    m_popMandatoryQueue;  }
+  transition(I, Response2) {    s_store_hit;    c_issueResponse2;    m_popMandatoryQueue;  }
+  transition(I, Response3) {    s_store_hit;    c_issueResponse3;    m_popMandatoryQueue;  }
+  transition(I, Response4) {    s_store_hit;    c_issueResponse4;    m_popMandatoryQueue;  }
+  transition(I, Response5) {    s_store_hit;    c_issueResponse5;    m_popMandatoryQueue;  }
+  transition(I, Response6) {    s_store_hit;    c_issueResponse6;    m_popMandatoryQueue;  }
+  transition(I, Response7) {    s_store_hit;    c_issueResponse7;    m_popMandatoryQueue;  }
+  transition(I, Response8) {    s_store_hit;    c_issueResponse8;    m_popMandatoryQueue;  }
+  transition(I, Response9) {    s_store_hit;    c_issueResponse9;    m_popMandatoryQueue;  }
+  transition(I, Response10) {    s_store_hit;    c_issueResponse10;    m_popMandatoryQueue;  }
+  transition(I, Response11) {    s_store_hit;    c_issueResponse11;    m_popMandatoryQueue;  }
+  transition(I, Response12) {    s_store_hit;    c_issueResponse12;    m_popMandatoryQueue;  }
+  transition(I, Response13) {    s_store_hit;    c_issueResponse13;    m_popMandatoryQueue;  }
+  transition(I, Response14) {    s_store_hit;    c_issueResponse14;    m_popMandatoryQueue;  }
+  transition(I, Response15) {    s_store_hit;    c_issueResponse15;    m_popMandatoryQueue;  }
+  transition(I, Response16) {    s_store_hit;    c_issueResponse16;    m_popMandatoryQueue;  }
+  
   transition(I, Request) {
     r_load_hit;
     a_issueRequest;

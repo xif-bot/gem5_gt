@@ -85,6 +85,23 @@ MemCmd::commandInfo[] =
     /* WriteReq */
     { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData),
             WriteResp, "WriteReq" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq1" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq2" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq3" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq4" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq5" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq6" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq7" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq8" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq9" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq10" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq11" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq12" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq13" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq14" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq15" },
+    { SET5(IsWrite, NeedsWritable, IsRequest, NeedsResponse, HasData), WriteResp, "WriteReq16" },
+
     /* WriteResp */
     { SET2(IsWrite, IsResponse), InvalidCmd, "WriteResp" },
     /* WritebackDirty */

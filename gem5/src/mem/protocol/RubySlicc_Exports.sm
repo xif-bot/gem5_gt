@@ -157,6 +157,23 @@ enumeration(TransitionResult, desc="...") {
 enumeration(RubyRequestType, desc="...", default="RubyRequestType_NULL") {
   LD,                desc="Load";
   ST,                desc="Store";
+  ST1,                desc="Store";
+  ST2,                desc="Store";
+  ST3,                desc="Store";
+  ST4,                desc="Store";
+  ST5,                desc="Store";
+  ST6,                desc="Store";
+  ST7,                desc="Store";
+  ST8,                desc="Store";
+  ST9,                desc="Store";
+  ST10,                desc="Store";
+  ST11,                desc="Store";
+  ST12,                desc="Store";
+  ST13,                desc="Store";
+  ST14,                desc="Store";
+  ST15,                desc="Store";
+  ST16,                desc="Store";
+
   ATOMIC,            desc="Atomic Load/Store -- depricated. use ATOMIC_RETURN or ATOMIC_NO_RETURN";
   ATOMIC_RETURN,     desc="Atomic Load/Store, return data";
   ATOMIC_NO_RETURN,  desc="Atomic Load/Store, do not return data";

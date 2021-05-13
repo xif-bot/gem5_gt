@@ -9,4 +9,4 @@
 --injectionrate=0.1 \
 --synthetic=uniform_random \
 --routing-algorithm=xy \
---num_vnets=9
+--num_vnets=19

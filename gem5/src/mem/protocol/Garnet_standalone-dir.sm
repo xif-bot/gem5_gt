@@ -38,6 +38,23 @@ machine(MachineType:Directory, "Garnet_standalone Directory")
             vnet_type = "forward";
       MessageBuffer * responseToDir, network="From", virtual_network="2",
             vnet_type = "response";
+      MessageBuffer * responseToDir1, network="From",   virtual_network="3",    vnet_type = "response1";
+      MessageBuffer * responseToDir2, network="From",   virtual_network="4",    vnet_type = "response2";
+      MessageBuffer * responseToDir3, network="From",   virtual_network="5",    vnet_type = "response3";
+      MessageBuffer * responseToDir4, network="From",   virtual_network="6",    vnet_type = "response4";
+      MessageBuffer * responseToDir5, network="From",   virtual_network="7",    vnet_type = "response5";
+      MessageBuffer * responseToDir6, network="From",   virtual_network="8",    vnet_type = "response6";
+      MessageBuffer * responseToDir7, network="From",   virtual_network="9",    vnet_type = "response7";
+      MessageBuffer * responseToDir8, network="From",   virtual_network="10",   vnet_type = "response8";
+      MessageBuffer * responseToDir9, network="From",   virtual_network="11",   vnet_type = "response9";
+      MessageBuffer * responseToDir10, network="From",  virtual_network="12",   vnet_type = "response10";
+      MessageBuffer * responseToDir11, network="From",  virtual_network="13",   vnet_type = "response11";
+      MessageBuffer * responseToDir12, network="From",  virtual_network="14",   vnet_type = "response12";
+      MessageBuffer * responseToDir13, network="From",  virtual_network="15",   vnet_type = "response13";
+      MessageBuffer * responseToDir14, network="From",  virtual_network="16",   vnet_type = "response14";
+      MessageBuffer * responseToDir15, network="From",  virtual_network="17",   vnet_type = "response15";
+      MessageBuffer * responseToDir16, network="From",  virtual_network="18",   vnet_type = "response16";
+      
 {
   // STATES
   state_declaration(State, desc="Directory states", default="Directory_State_I") {
@@ -51,6 +68,23 @@ machine(MachineType:Directory, "Garnet_standalone Directory")
     Receive_Request, desc="Receive Message";
     Receive_Forward, desc="Receive Message";
     Receive_Response, desc="Receive Message";
+    Receive_Response1, desc="Receive Message";
+    Receive_Response2, desc="Receive Message";
+    Receive_Response3, desc="Receive Message";
+    Receive_Response4, desc="Receive Message";
+    Receive_Response5, desc="Receive Message";
+    Receive_Response6, desc="Receive Message";
+    Receive_Response7, desc="Receive Message";
+    Receive_Response8, desc="Receive Message";
+    Receive_Response9, desc="Receive Message";
+    Receive_Response10, desc="Receive Message";
+    Receive_Response11, desc="Receive Message";
+    Receive_Response12, desc="Receive Message";
+    Receive_Response13, desc="Receive Message";
+    Receive_Response14, desc="Receive Message";
+    Receive_Response15, desc="Receive Message";
+    Receive_Response16, desc="Receive Message";
+
   }
 
   // TYPES
@@ -121,6 +155,211 @@ machine(MachineType:Directory, "Garnet_standalone Directory")
       }
     }
   }
+  in_port(responseQueue_in1, RequestMsg, responseToDir1) {
+    if (responseQueue_in1.isReady(clockEdge())) {
+      peek(responseQueue_in1, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response1, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+
+  in_port(responseQueue_in2, RequestMsg, responseToDir2) {
+    if (responseQueue_in2.isReady(clockEdge())) {
+      peek(responseQueue_in2, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response2, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+
+  in_port(responseQueue_in3, RequestMsg, responseToDir3) {
+    if (responseQueue_in3.isReady(clockEdge())) {
+      peek(responseQueue_in3, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response3, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+
+  // 4
+  in_port(responseQueue_in4, RequestMsg, responseToDir4) {
+    if (responseQueue_in4.isReady(clockEdge())) {
+      peek(responseQueue_in4, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response4, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+
+  //5
+  in_port(responseQueue_in5, RequestMsg, responseToDir5) {
+    if (responseQueue_in5.isReady(clockEdge())) {
+      peek(responseQueue_in5, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response5, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+
+  //6
+  in_port(responseQueue_in6, RequestMsg, responseToDir6) {
+    if (responseQueue_in6.isReady(clockEdge())) {
+      peek(responseQueue_in6, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response6, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+
+  //7
+  in_port(responseQueue_in7, RequestMsg, responseToDir7) {
+    if (responseQueue_in7.isReady(clockEdge())) {
+      peek(responseQueue_in7, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response7, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+  
+  //8
+  in_port(responseQueue_in8, RequestMsg, responseToDir8) {
+    if (responseQueue_in8.isReady(clockEdge())) {
+      peek(responseQueue_in8, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response8, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+
+  //9
+  in_port(responseQueue_in9, RequestMsg, responseToDir9) {
+    if (responseQueue_in9.isReady(clockEdge())) {
+      peek(responseQueue_in9, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response9, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+
+  //10
+  in_port(responseQueue_in10, RequestMsg, responseToDir10) {
+    if (responseQueue_in10.isReady(clockEdge())) {
+      peek(responseQueue_in10, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response10, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+
+  //11
+  in_port(responseQueue_in11, RequestMsg, responseToDir11) {
+    if (responseQueue_in11.isReady(clockEdge())) {
+      peek(responseQueue_in11, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response11, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+
+  //12
+  in_port(responseQueue_in12, RequestMsg, responseToDir12) {
+    if (responseQueue_in12.isReady(clockEdge())) {
+      peek(responseQueue_in12, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response12, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+
+  //13
+  in_port(responseQueue_in13, RequestMsg, responseToDir13) {
+    if (responseQueue_in13.isReady(clockEdge())) {
+      peek(responseQueue_in13, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response13, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+
+  //14
+  in_port(responseQueue_in14, RequestMsg, responseToDir14) {
+    if (responseQueue_in14.isReady(clockEdge())) {
+      peek(responseQueue_in14, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response14, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+  
+  //15
+  in_port(responseQueue_in15, RequestMsg, responseToDir15) {
+    if (responseQueue_in15.isReady(clockEdge())) {
+      peek(responseQueue_in15, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response15, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+
+  //16
+  in_port(responseQueue_in16, RequestMsg, responseToDir16) {
+    if (responseQueue_in16.isReady(clockEdge())) {
+      peek(responseQueue_in16, RequestMsg) {
+        if (in_msg.Type == CoherenceRequestType:MSG) {
+          trigger(Event:Receive_Response16, in_msg.addr);
+        } else {
+          error("Invalid message");
+        }
+      }
+    }
+  }
+
 
   // Actions
 
@@ -135,6 +374,22 @@ machine(MachineType:Directory, "Garnet_standalone Directory")
   action(r_popIncomingResponseQueue, "r", desc="Pop incoming response queue") {
     responseQueue_in.dequeue(clockEdge());
   }
+  action(r_popIncomingResponseQueue1,   "r1", desc="Pop incoming response queue") {     responseQueue_in1.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue2,   "r2", desc="Pop incoming response queue") {     responseQueue_in2.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue3,   "r3", desc="Pop incoming response queue") {     responseQueue_in3.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue4,   "r4", desc="Pop incoming response queue") {     responseQueue_in4.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue5,   "r5", desc="Pop incoming response queue") {     responseQueue_in5.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue6,   "r6", desc="Pop incoming response queue") {     responseQueue_in6.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue7,   "r7", desc="Pop incoming response queue") {     responseQueue_in7.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue8,   "r8", desc="Pop incoming response queue") {     responseQueue_in8.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue9,   "r9", desc="Pop incoming response queue") {     responseQueue_in9.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue10,  "r10", desc="Pop incoming response queue") {    responseQueue_in10.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue11,  "r11", desc="Pop incoming response queue") {    responseQueue_in11.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue12,  "r12", desc="Pop incoming response queue") {    responseQueue_in12.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue13,  "r13", desc="Pop incoming response queue") {    responseQueue_in13.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue14,  "r14", desc="Pop incoming response queue") {    responseQueue_in14.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue15,  "r15", desc="Pop incoming response queue") {    responseQueue_in15.dequeue(clockEdge());  }
+  action(r_popIncomingResponseQueue16,  "r16", desc="Pop incoming response queue") {    responseQueue_in16.dequeue(clockEdge());  }
 
   // TRANSITIONS
 
@@ -150,4 +405,21 @@ machine(MachineType:Directory, "Garnet_standalone Directory")
   transition(I, Receive_Response) {
     r_popIncomingResponseQueue;
   }
+  transition(I, Receive_Response1) {    r_popIncomingResponseQueue1;  }
+  transition(I, Receive_Response2) {    r_popIncomingResponseQueue2;  }
+  transition(I, Receive_Response3) {    r_popIncomingResponseQueue3;  }
+  transition(I, Receive_Response4) {    r_popIncomingResponseQueue4;  }
+  transition(I, Receive_Response5) {    r_popIncomingResponseQueue5;  }
+  transition(I, Receive_Response6) {    r_popIncomingResponseQueue6;  }
+  transition(I, Receive_Response7) {    r_popIncomingResponseQueue7;  }
+  transition(I, Receive_Response8) {    r_popIncomingResponseQueue8;  }
+  transition(I, Receive_Response9) {    r_popIncomingResponseQueue9;  }
+  transition(I, Receive_Response10) {    r_popIncomingResponseQueue10;  }
+  transition(I, Receive_Response11) {    r_popIncomingResponseQueue11;  }
+  transition(I, Receive_Response12) {    r_popIncomingResponseQueue12;  }
+  transition(I, Receive_Response13) {    r_popIncomingResponseQueue13;  }
+  transition(I, Receive_Response14) {    r_popIncomingResponseQueue14;  }
+  transition(I, Receive_Response15) {    r_popIncomingResponseQueue15;  }
+  transition(I, Receive_Response16) {    r_popIncomingResponseQueue16;  }
+  
 }

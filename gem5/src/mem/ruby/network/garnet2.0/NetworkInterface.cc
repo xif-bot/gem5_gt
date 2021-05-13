@@ -119,6 +119,9 @@ void
 NetworkInterface::addNode(vector<MessageBuffer *>& in,
                             vector<MessageBuffer *>& out)
 {
+    std::cout <<"fanxi added 0512 in NetworkInterface.cc, addNode, in.size()" <<in.size() <<std::endl;
+    std::cout <<"fanxi added 0512 in NetworkInterface.cc, addNode, out.size()" <<out.size() <<std::endl;
+
     inNode_ptr = in;
     outNode_ptr = out;
 

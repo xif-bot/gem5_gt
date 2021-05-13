@@ -191,6 +191,22 @@ Sequencer::insertRequest(PacketPtr pkt, RubyRequestType request_type)
                                            (SequencerRequest*) NULL);
 
     if ((request_type == RubyRequestType_ST) ||
+        (request_type == RubyRequestType_ST1) ||
+        (request_type == RubyRequestType_ST2) ||
+        (request_type == RubyRequestType_ST3) ||
+        (request_type == RubyRequestType_ST4) ||
+        (request_type == RubyRequestType_ST5) ||
+        (request_type == RubyRequestType_ST6) ||
+        (request_type == RubyRequestType_ST7) ||
+        (request_type == RubyRequestType_ST8) ||
+        (request_type == RubyRequestType_ST9) ||
+        (request_type == RubyRequestType_ST10) ||
+        (request_type == RubyRequestType_ST11) ||
+        (request_type == RubyRequestType_ST12) ||
+        (request_type == RubyRequestType_ST13) ||
+        (request_type == RubyRequestType_ST14) ||
+        (request_type == RubyRequestType_ST15) ||
+        (request_type == RubyRequestType_ST16) ||
         (request_type == RubyRequestType_RMW_Read) ||
         (request_type == RubyRequestType_RMW_Write) ||
         (request_type == RubyRequestType_Load_Linked) ||
@@ -375,6 +391,22 @@ Sequencer::writeCallback(Addr address, DataBlock& data,
     markRemoved();
 
     assert((request->m_type == RubyRequestType_ST) ||
+           (request->m_type == RubyRequestType_ST1) ||
+           (request->m_type == RubyRequestType_ST2) ||
+           (request->m_type == RubyRequestType_ST3) ||
+           (request->m_type == RubyRequestType_ST4) ||
+           (request->m_type == RubyRequestType_ST5) ||
+           (request->m_type == RubyRequestType_ST6) ||
+           (request->m_type == RubyRequestType_ST7) ||
+           (request->m_type == RubyRequestType_ST8) ||
+           (request->m_type == RubyRequestType_ST9) ||
+           (request->m_type == RubyRequestType_ST10) ||
+           (request->m_type == RubyRequestType_ST11) ||
+           (request->m_type == RubyRequestType_ST12) ||
+           (request->m_type == RubyRequestType_ST13) ||
+           (request->m_type == RubyRequestType_ST14) ||
+           (request->m_type == RubyRequestType_ST15) ||
+           (request->m_type == RubyRequestType_ST16) ||
            (request->m_type == RubyRequestType_ATOMIC) ||
            (request->m_type == RubyRequestType_RMW_Read) ||
            (request->m_type == RubyRequestType_RMW_Write) ||
@@ -584,12 +616,30 @@ Sequencer::makeRequest(PacketPtr pkt)
         // should always be treated like a write, but since a SwapReq implies
         // both isWrite() and isRead() are true, check isWrite() first here.
         //
-        if (pkt->isWrite()) {
+        if (pkt->cmd==MemCmd::WriteReq) {
             //
             // Note: M5 packets do not differentiate ST from RMW_Write
             //
             primary_type = secondary_type = RubyRequestType_ST;
-        } else if (pkt->isRead()) {
+        } 
+        else if (pkt->cmd==MemCmd::WriteReq1) { primary_type = secondary_type = RubyRequestType_ST1;        }
+        else if (pkt->cmd==MemCmd::WriteReq2) { primary_type = secondary_type = RubyRequestType_ST2;        }
+        else if (pkt->cmd==MemCmd::WriteReq3) { primary_type = secondary_type = RubyRequestType_ST3;        }
+        else if (pkt->cmd==MemCmd::WriteReq4) { primary_type = secondary_type = RubyRequestType_ST4;        }
+        else if (pkt->cmd==MemCmd::WriteReq5) { primary_type = secondary_type = RubyRequestType_ST5;        }
+        else if (pkt->cmd==MemCmd::WriteReq6) { primary_type = secondary_type = RubyRequestType_ST6;        }
+        else if (pkt->cmd==MemCmd::WriteReq7) { primary_type = secondary_type = RubyRequestType_ST7;        }
+        else if (pkt->cmd==MemCmd::WriteReq8) { primary_type = secondary_type = RubyRequestType_ST8;        }
+        else if (pkt->cmd==MemCmd::WriteReq9) { primary_type = secondary_type = RubyRequestType_ST9;        }
+        else if (pkt->cmd==MemCmd::WriteReq10) {primary_type = secondary_type = RubyRequestType_ST10;       }
+        else if (pkt->cmd==MemCmd::WriteReq11) {primary_type = secondary_type = RubyRequestType_ST11;       }
+        else if (pkt->cmd==MemCmd::WriteReq12) {primary_type = secondary_type = RubyRequestType_ST12;       }
+        else if (pkt->cmd==MemCmd::WriteReq13) {primary_type = secondary_type = RubyRequestType_ST13;       }
+        else if (pkt->cmd==MemCmd::WriteReq14) {primary_type = secondary_type = RubyRequestType_ST14;       }
+        else if (pkt->cmd==MemCmd::WriteReq15) {primary_type = secondary_type = RubyRequestType_ST15;       }
+        else if (pkt->cmd==MemCmd::WriteReq16) {primary_type = secondary_type = RubyRequestType_ST16;       }
+
+        else if (pkt->isRead()) {
             if (pkt->req->isInstFetch()) {
                 primary_type = secondary_type = RubyRequestType_IFETCH;
             } else {
@@ -604,7 +654,7 @@ Sequencer::makeRequest(PacketPtr pkt)
                     primary_type = RubyRequestType_RMW_Read;
                     secondary_type = RubyRequestType_ST;
                 } else {
-                    primary_type = secondary_type = RubyRequestType_LD;
+                    primary_type = secondary_type = RubyRequestType_LD;  //used in vnet 0
                 }
             }
         } else if (pkt->isFlush()) {

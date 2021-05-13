@@ -1,0 +1,12 @@
+
+packets_injected = 8004                      
+packets_received = 7988                      
+average_packet_queueing_latency = 3983.688282                      
+average_packet_network_latency = 18.932399                      
+average_packet_latency = 4002.620681                      
+flits_injected = 40020                      
+flits_received = 39968                      
+average_flit_queueing_latency = 3986.446782                      
+average_flit_network_latency = 13.038931                      
+average_flit_latency = 3999.485714                      
+average_hops = 1                      

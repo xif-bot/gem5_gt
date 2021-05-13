@@ -1,0 +1,265 @@
+//configs                  
+--network=garnet2.0 \
+--num-cpus=64 \
+--num-dirs=64 \
+--topology=Mesh_XY \
+--mesh-rows=8 \
+--sim-cycles=10000 \
+--inj-vnet=0 \
+--injectionrate=0.02 \
+--synthetic=uniform_random
+
+--injectionrate=0.02 \
+packets_injected = 12690                      
+packets_received = 12682                      
+average_packet_queueing_latency = 0                      
+average_packet_network_latency = 12.511434                      
+average_packet_latency = 12.511434                      
+flits_injected = 12690                      
+flits_received = 12682                      
+average_flit_queueing_latency = 0                      
+average_flit_network_latency = 12.511434                      
+average_flit_latency = 12.511434                      
+average_hops = 5.236319                      
+
+--injectionrate=0.06 \
+packets_injected = 38401                      
+packets_received = 38334                      
+average_packet_queueing_latency = 0                      
+average_packet_network_latency = 12.685292                      
+average_packet_latency = 12.685292                      
+flits_injected = 38401                      
+flits_received = 38334                      
+average_flit_queueing_latency = 0                      
+average_flit_network_latency = 12.685292                      
+average_flit_latency = 12.685292                      
+average_hops = 5.274247    
+
+--injectionrate=0.1 \
+packets_injected = 64010                      
+packets_received = 63901                      
+average_packet_queueing_latency = 0.000203                      
+average_packet_network_latency = 12.772148                      
+average_packet_latency = 12.772351                      
+flits_injected = 64010                      
+flits_received = 63901                      
+average_flit_queueing_latency = 0.000203                      
+average_flit_network_latency = 12.772148                      
+average_flit_latency = 12.772351                      
+average_hops = 5.256428                    
+
+
+--injectionrate=0.14 \
+packets_injected = 89461                      
+packets_received = 89324                      
+average_packet_queueing_latency = 0.000862                      
+average_packet_network_latency = 12.918880                      
+average_packet_latency = 12.919742                      
+flits_injected = 89461                      
+flits_received = 89324                      
+average_flit_queueing_latency = 0.000862                      
+average_flit_network_latency = 12.918880                      
+average_flit_latency = 12.919742                      
+average_hops = 5.240574                
+
+
+--injectionrate=0.18 \
+packets_injected = 115164                      
+packets_received = 115013                      
+average_packet_queueing_latency = 0.002078                      
+average_packet_network_latency = 13.184466                      
+average_packet_latency = 13.186544                      
+flits_injected = 115164                      
+flits_received = 115013                      
+average_flit_queueing_latency = 0.002078                      
+average_flit_network_latency = 13.184466                      
+average_flit_latency = 13.186544                      
+average_hops = 5.253702                      
+
+--injectionrate=0.3 \
+packets_injected = 191769                      
+packets_received = 191433                      
+average_packet_queueing_latency = 0.166544                      
+average_packet_network_latency = 15.381737                      
+average_packet_latency = 15.548281                      
+flits_injected = 191769                      
+flits_received = 191433                      
+average_flit_queueing_latency = 0.166544                      
+average_flit_network_latency = 15.381737                      
+average_flit_latency = 15.548281                      
+average_hops = 5.251268            
+
+
+
+1*2 mesh
+--network=garnet2.0 \
+--num-cpus=2 \
+--num-dirs=2 \
+--topology=Mesh_XY \
+--mesh-rows=1 \
+--sim-cycles=10000 \
+--inj-vnet=0 \
+--injectionrate=0.3 \
+--synthetic=uniform_random
+
+结果：packets_injected = 6011                      
+packets_received = 6007                      
+average_packet_queueing_latency = 0.012985                      
+average_packet_network_latency = 3.116198                      
+average_packet_latency = 3.129183                      
+flits_injected = 6011                      
+flits_received = 6007                      
+average_flit_queueing_latency = 0.012985                      
+average_flit_network_latency = 3.116198                      
+average_flit_latency = 3.129183                      
+average_hops = 0.497919      
+
+2*2 mesh
+packets_injected = 12021                      
+packets_received = 12014                      
+average_packet_queueing_latency = 0.009822                      
+average_packet_network_latency = 4.170385                      
+average_packet_latency = 4.180206                      
+flits_injected = 12021                      
+flits_received = 12014                      
+average_flit_queueing_latency = 0.009822                      
+average_flit_network_latency = 4.170385                      
+average_flit_latency = 4.180206                      
+average_hops = 0.992176                      
+
+4*4 mesh
+packets_injected = 47954                      
+packets_received = 47915                      
+average_packet_queueing_latency = 0.013002                      
+average_packet_network_latency = 7.414108                      
+average_packet_latency = 7.427111                      
+flits_injected = 47954                      
+flits_received = 47915                      
+average_flit_queueing_latency = 0.013002                      
+average_flit_network_latency = 7.414108                      
+average_flit_latency = 7.427111                      
+average_hops = 2.496316 
+
+8*8 mesh
+packets_injected = 191769                      
+packets_received = 191433                      
+average_packet_queueing_latency = 0.166544                      
+average_packet_network_latency = 15.381737                      
+average_packet_latency = 15.548281                      
+flits_injected = 191769                      
+flits_received = 191433                      
+average_flit_queueing_latency = 0.166544                      
+average_flit_network_latency = 15.381737                      
+average_flit_latency = 15.548281                      
+average_hops = 5.251268      
+
+
+check the influence of vnet
+--network=garnet2.0 \
+--num-cpus=64 \
+--num-dirs=64 \
+--topology=Mesh_XY \
+--mesh-rows=8 \
+--sim-cycles=10000 \
+--inj-vnet=-1 \
+--injectionrate=0.3 \
+--synthetic=uniform_random \
+--routing-algorithm=xy
+这里修改了-1生成的packet种类，会生成vnet=1或者0；
+------
+            
+可以认为vnet=2；
+packets_injected = 191833                      
+packets_received = 191531                      
+average_packet_queueing_latency = 0.004302                      
+average_packet_network_latency = 14.893777                      
+average_packet_latency = 14.898079                      
+flits_injected = 191833                      
+flits_received = 191531                      
+average_flit_queueing_latency = 0.004302                      
+average_flit_network_latency = 14.893777                      
+average_flit_latency = 14.898079                      
+average_hops = 5.243726                      
+
+可以认为vnet=1；
+--inj-vnet=1
+packets_injected = 191768                      
+packets_received = 191425                      
+average_packet_queueing_latency = 0.162377                      
+average_packet_network_latency = 15.363390                      
+average_packet_latency = 15.525767                      
+flits_injected = 191768                      
+flits_received = 191425                      
+average_flit_queueing_latency = 0.162377                      
+average_flit_network_latency = 15.363390                      
+average_flit_latency = 15.525767                      
+average_hops = 5.251179                      
+
+
+
+injectionrate 修改为1；inj-vnet=-1
+packets_injected = 64118                      
+packets_received = 64006                      
+average_packet_queueing_latency = 0                      
+average_packet_network_latency = 12.737790                      
+average_packet_latency = 12.737790                      
+flits_injected = 64118                      
+flits_received = 64006                      
+average_flit_queueing_latency = 0                      
+average_flit_network_latency = 12.737790                      
+average_flit_latency = 12.737790                      
+average_hops = 5.237384                      
+
+injectionrate 修改为1；inj-vnet=1
+packets_injected = 64010                      
+packets_received = 63901                      
+average_packet_queueing_latency = 0.000203                      
+average_packet_network_latency = 12.772742                      
+average_packet_latency = 12.772946                      
+flits_injected = 64010                      
+flits_received = 63901                      
+average_flit_queueing_latency = 0.000203                      
+average_flit_network_latency = 12.772742                      
+average_flit_latency = 12.772946                      
+average_hops = 5.256428      
+
+可能只有发长packet的时候效果才会更加明显？
+./build/Garnet_standalone/gem5.opt configs/example/garnet_synth_traffic.py \
+--network=garnet2.0 \
+--num-cpus=64 \
+--num-dirs=64 \
+--topology=Mesh_XY \
+--mesh-rows=8 \
+--sim-cycles=10000 \
+--inj-vnet=4 \
+--injectionrate=0.5 \
+--synthetic=uniform_random \
+--routing-algorithm=xy \
+--num_vnets=9
+
+结果：
+packets_injected = 45214                      
+packets_received = 44792                      
+average_packet_queueing_latency = 4166.192579                      
+average_packet_network_latency = 90.594303                      
+average_packet_latency = 4256.786882                      
+flits_injected = 226070                      
+flits_received = 224138                      
+average_flit_queueing_latency = 4169.576676                      
+average_flit_network_latency = 83.205824                      
+average_flit_latency = 4252.782500                      
+average_hops = 5.163814  
+
+--inj-vnet=-2 \
+packets_injected = 44756                      
+packets_received = 44324                      
+average_packet_queueing_latency = 4137.528653                      
+average_packet_network_latency = 91.227258                      
+average_packet_latency = 4228.755911                      
+flits_injected = 223780                      
+flits_received = 221815                      
+average_flit_queueing_latency = 4141.258139                      
+average_flit_network_latency = 83.873038                      
+average_flit_latency = 4225.131177                      
+average_hops = 5.167951                      
+           

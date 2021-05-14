@@ -130,7 +130,7 @@ GarnetNetwork::GarnetNetwork(const Params *p)
         // fanxi modified 0522: change all vnet to data type 
         // vnet 0和1维持control type，2及以后都是data type
         
-        if (m_vnet_type_names[i] == "response" || m_vnet_type_names[i] == "")
+        if (m_vnet_type_names[i] == "response" || m_vnet_type_names[i].find("response")!=string::npos)
             m_vnet_type[i] = DATA_VNET_; // carries data (and ctrl) packets
         else
             m_vnet_type[i] = CTRL_VNET_; // carries only ctrl packets

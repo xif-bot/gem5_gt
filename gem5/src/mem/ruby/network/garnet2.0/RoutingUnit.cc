@@ -412,11 +412,11 @@ RoutingUnit::outportComputeCustom(RouteInfo route,
     int x_hops = abs(dest_x - my_x);
     int y_hops = abs(dest_y - my_y);
 
-    bool x_dirn = (dest_x >= my_x);
-    bool y_dirn = (dest_y >= my_y);
+    // bool x_dirn = (dest_x >= my_x);
+    // bool y_dirn = (dest_y >= my_y);
     assert(!(x_hops == 0 && y_hops == 0));
 
-    if (x_hops != 0)
+    /* if (x_hops != 0)
     {
         if (x_dirn > 0)
             outport_dirn = "East";
@@ -429,6 +429,26 @@ RoutingUnit::outportComputeCustom(RouteInfo route,
             outport_dirn = "North";
         else
             outport_dirn = "South";
+    }  */
+
+    // 2 ← 3 (vnet=2)
+    // ↓   ↑
+    // 0 → 1 
+
+    // 2 → 3 (vnet=3)
+    // ↑   ↓
+    // 0 ← 1 
+    if (route.vnet == 2) {
+        if (my_id == 0)         outport_dirn = "East";
+        if (my_id == 1)         outport_dirn = "North";
+        if (my_id == 2)         outport_dirn = "South";
+        if (my_id == 3)         outport_dirn = "West";
+    }
+    else if (route.vnet == 3){
+        if (my_id == 0)         outport_dirn = "North";
+        if (my_id == 1)         outport_dirn = "West";
+        if (my_id == 2)         outport_dirn = "East";
+        if (my_id == 3)         outport_dirn = "South";
     }
 
     std::cout << "outport_dirn" << outport_dirn << std::endl;

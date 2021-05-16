@@ -169,7 +169,6 @@ GarnetSyntheticTraffic::tick()
 
         if (singleSender >= 0 && id != singleSender)
             senderEnable = false;
-
         if (senderEnable)
             generatePkt();
     }
@@ -284,6 +283,41 @@ GarnetSyntheticTraffic::generatePkt()
     // Vnet 0 and 1 are for control packets (1-flit)
     // Vnet 2 is for data packets (5-flit)
     int injReqType = injVnet;
+
+    // for 2*2 routerless mesh test
+    // 2 ← 3 (vnet=2)
+    // ↓   ↑
+    // 0 → 1 
+
+    // 2 → 3 (vnet=3)
+    // ↑   ↓
+    // 0 ← 1 
+    if (id == 0) {
+        if      (destination == 0) injReqType = 2;
+        else if (destination == 1) injReqType = 2;
+        else if (destination == 2) injReqType = 3;
+        else if (destination == 3) injReqType = 3;
+    }
+    else if (id == 1) {
+        if      (destination == 0) injReqType = 3;
+        else if (destination == 1) injReqType = 2;
+        else if (destination == 2) injReqType = 3;
+        else if (destination == 3) injReqType = 2;
+    }
+
+    else if (id == 2) {
+        if      (destination == 0) injReqType = 2;
+        else if (destination == 1) injReqType = 2;
+        else if (destination == 2) injReqType = 3;
+        else if (destination == 3) injReqType = 3;
+    }
+
+    else if (id == 3) {
+        if      (destination == 0) injReqType = 3;
+        else if (destination == 1) injReqType = 3;
+        else if (destination == 2) injReqType = 2;
+        else if (destination == 3) injReqType = 2;
+    }
 
     if (injReqType==-1) // -1 代表random(0,2),其他代表自己本身
     {

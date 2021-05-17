@@ -84,6 +84,20 @@ NetworkInterface::init()
     for (int i = 0; i < m_num_vcs; i++) {
         m_out_vc_state.push_back(new OutVcState(i, m_net_ptr));
     }
+    // read the network config and update num_cpus
+    std::string file;
+	file = "./current_NoC_numCPUs.txt";
+	ifstream infile; 
+    infile.open(file.data());  
+    assert(infile.is_open());   
+
+    string s_num_cpus;
+    getline(infile,s_num_cpus);
+
+    infile.close();             //关闭文件输入流 
+    num_cpus=atoi(s_num_cpus.c_str());
+    //std::cout <<"in NI.cc the number of cpus=" << num_cpus<<std::endl;
+
 }
 
 NetworkInterface::~NetworkInterface()
@@ -256,7 +270,7 @@ NetworkInterface::wakeup()
                 num_recv_packet ++;
                 std::cout <<  "NI="  << m_id << "num_recv_packet = " << num_recv_packet << std::endl;
                 // # received packets ++ here
-				update_recv_packets(m_id-16, num_recv_packet); 
+				update_recv_packets(m_id-num_cpus, num_recv_packet); 
 
                 delete t_flit;
             } else {

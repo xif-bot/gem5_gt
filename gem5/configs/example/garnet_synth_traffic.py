@@ -107,6 +107,10 @@ if args:
 #     sys.exit(1)
 
 
+with open ("./current_NoC_numCPUs.txt","w") as f:
+      f.write(str(options.num_cpus))
+      f.close()
+
 cpus = [ GarnetSyntheticTraffic(
                      num_packets_max=options.num_packets_max,
                      single_sender=options.single_sender_id,

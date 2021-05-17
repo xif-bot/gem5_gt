@@ -52,6 +52,7 @@ class flitBuffer;
 class NetworkInterface : public ClockedObject, public Consumer
 {
   public:
+    int num_cpus;
     typedef GarnetNetworkInterfaceParams Params;
     NetworkInterface(const Params *p);
     ~NetworkInterface();

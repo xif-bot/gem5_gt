@@ -48,7 +48,7 @@ Options.addNoISAOptions(parser)
 parser.add_option("--synthetic", type="choice", default="uniform_random",
                   choices=['uniform_random', 'tornado', 'bit_complement', \
                            'bit_reverse', 'bit_rotation', 'neighbor', \
-                            'shuffle', 'transpose'])
+                            'shuffle', 'transpose','DNN'])
 
 parser.add_option("-i", "--injectionrate", type="float", default=0.1,
                   metavar="I",
@@ -79,7 +79,7 @@ parser.add_option("--inj-vnet", type="int", default=-1,
                   help="Only inject in this vnet (0, 1 or 2).\
                         0 and 1 are 1-flit, 2 is 5-flit.\
                         Set to -1 to inject randomly in all vnets.")
-                        
+
 parser.add_option("--link_width_bits", type="int", default=128,
                   help="default = 128 bit")
 

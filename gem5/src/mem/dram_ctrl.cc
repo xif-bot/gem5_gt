@@ -189,9 +189,9 @@ DRAMCtrl::init()
     // a bit of sanity checks on the interleaving, save it for here to
     // ensure that the system pointer is initialised
     if (range.interleaved()) {
-        if (channels != range.stripes())
-            fatal("%s has %d interleaved address stripes but %d channel(s)\n",
-                  name(), range.stripes(), channels);
+        // if (channels != range.stripes())
+        //     fatal("%s has %d interleaved address stripes but %d channel(s)\n",
+        //           name(), range.stripes(), channels);
 
         if (addrMapping == Enums::RoRaBaChCo) {
             if (rowBufferSize != range.granularity()) {

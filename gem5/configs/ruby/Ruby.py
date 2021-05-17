@@ -103,7 +103,7 @@ def setup_memory_controllers(system, ruby, dir_cntrls, options):
         for r in system.mem_ranges:
             mem_ctrl = MemConfig.create_mem_ctrl(
                 MemConfig.get(options.mem_type), r, index, options.num_dirs,
-                int(math.log(options.num_dirs, 2)), options.cacheline_size)
+                int(math.ceil(math.log(options.num_dirs, 2))), options.cacheline_size) # fanxi modified possibe bug?
 
             if options.access_backing_store:
                 mem_ctrl.kvm_map=False
@@ -204,7 +204,7 @@ def create_directories(options, mem_ranges, ruby_system):
         # if the numa_bit is not specified, set the directory bits as the
         # lowest bits above the block offset bits, and the numa_bit as the
         # highest of those directory bits
-        dir_bits = int(math.log(options.num_dirs, 2))
+        dir_bits = int(math.ceil(math.log(options.num_dirs, 2))) ## modified by fanxi, possible bug?
         block_size_bits = int(math.log(options.cacheline_size, 2))
         numa_bit = block_size_bits + dir_bits - 1
 

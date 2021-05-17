@@ -73,7 +73,8 @@ class NetworkInterface : public ClockedObject, public Consumer
     void init_net_ptr(GarnetNetwork *net_ptr) { m_net_ptr = net_ptr; }
 
     uint32_t functionalWrite(Packet *);
-
+    int num_recv_packet;
+    
   private:
     GarnetNetwork *m_net_ptr;
     const NodeID m_id;

@@ -8,5 +8,6 @@
 --inj-vnet=2 \
 --injectionrate=0.02 \
 --synthetic=uniform_random \
---routing-algorithm=custom \
---if_routerless=1
+--routing-algorithm=xy \
+--if_routerless=0 \
+--link_width_bits=128

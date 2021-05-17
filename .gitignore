@@ -31,4 +31,5 @@ gem5/system/arm/bootloader/arm64/boot_v2.arm64
 gem5/configs/example/memcheck.cfg
 gem5/configs/dram/lowp_sweep.cfg
 m5out/*
-
+log.txt
+gem5/network_stats*

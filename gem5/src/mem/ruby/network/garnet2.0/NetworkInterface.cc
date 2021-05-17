@@ -36,6 +36,9 @@
 #include <cassert>
 #include <cmath>
 
+#include<fstream>
+#include<iostream>
+
 #include "base/cast.hh"
 #include "base/stl_helpers.hh"
 #include "debug/RubyNetwork.hh"
@@ -54,6 +57,7 @@ NetworkInterface::NetworkInterface(const Params *p)
       m_deadlock_threshold(p->garnet_deadlock_threshold),
       vc_busy_counter(m_virtual_networks, 0)
 {
+    num_recv_packet = 0;
     m_router_id = -1;
     m_vc_round_robin = 0;
     m_ni_out_vcs.resize(m_num_vcs);
@@ -185,6 +189,16 @@ NetworkInterface::incrementStats(flit *t_flit)
  * into the protocol buffer. It also checks for credits being sent by the
  * downstream router.
  */
+void update_recv_packets(int id,int num_recv_packet)
+{
+	std::string file;
+	file = "./../recv/"+std::to_string(id)+".txt";
+	ofstream OutFile(file);
+	OutFile << std::to_string(num_recv_packet); 
+    std::cout<<"fanxi added, update_recv_packets ing, id= " << id <<" packets="<<num_recv_packet<<std::endl;
+	OutFile.close();        
+}
+
 
 void
 NetworkInterface::wakeup()
@@ -239,6 +253,11 @@ NetworkInterface::wakeup()
 
                 // Update stats and delete flit pointer
                 incrementStats(t_flit);
+                num_recv_packet ++;
+                std::cout <<  "NI="  << m_id << "num_recv_packet = " << num_recv_packet << std::endl;
+                // # received packets ++ here
+				update_recv_packets(m_id-16, num_recv_packet); 
+
                 delete t_flit;
             } else {
                 // No space available- Place tail flit in stall queue and set

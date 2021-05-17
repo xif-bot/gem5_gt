@@ -152,9 +152,10 @@ class AddrRange
             xorHighBit = ranges.front().xorHighBit;
             intlvBits = ranges.front().intlvBits;
 
-            if (ranges.size() != (ULL(1) << intlvBits))
-                fatal("Got %d ranges spanning %d interleaving bits\n",
-                      ranges.size(), intlvBits);
+            // 去掉必须是2的次幂的限制
+            // if (ranges.size() != (ULL(1) << intlvBits))
+            //     fatal("Got %d ranges spanning %d interleaving bits\n",
+            //           ranges.size(), intlvBits);
 
             uint8_t match = 0;
             for (const auto& r : ranges) {

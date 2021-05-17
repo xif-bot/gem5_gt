@@ -148,8 +148,8 @@ def create_system(options, full_system, system, dma_ports, ruby_system):
 
 
     all_cntrls = l1_cntrl_nodes + dir_cntrl_nodes
-    ruby_system.network.number_of_virtual_networks = options.num_vnets
-    print ("fanxi added 0511, in garnet standalone.py, config  ruby_system.network.number_of_virtual_networks")
+    ruby_system.network.number_of_virtual_networks = 19
+    print ("fanxi added 0511, in garnet standalone.py, number of vnets can just be modified mannually!")
 
     topology = create_topology(all_cntrls, options)
     return (cpu_sequencers, dir_cntrl_nodes, topology)

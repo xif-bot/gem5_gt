@@ -392,12 +392,11 @@ RoutingUnit::outportComputeCustom(RouteInfo route,
     int src_id = route.src_router;
     int dest_id = route.dest_router;
 
-    //  a simple implementation of xy routing
     std::cout << "fanxi added in RoutingUnit.cc, in func outportComputeCustom" << std::endl;
-    std::cout << "route.vnet" << route.vnet << std::endl;
-    std::cout << "my_id" << my_id << std::endl;
-    std::cout << "src_id" << src_id << std::endl;
-    std::cout << "dest_id" << dest_id << std::endl;
+    std::cout << "route.vnet " << route.vnet << std::endl;
+    std::cout << "my_id " << my_id << std::endl;
+    std::cout << "src_id " << src_id << std::endl;
+    std::cout << "dest_id " << dest_id << std::endl;
 
     PortDirection outport_dirn = "Unknown";
     int M5_VAR_USED num_rows = m_router->get_net_ptr()->getNumRows();
@@ -431,25 +430,35 @@ RoutingUnit::outportComputeCustom(RouteInfo route,
             outport_dirn = "South";
     }  */
 
-    // 2 ← 3 (vnet=2)
-    // ↓   ↑
-    // 0 → 1 
+    int outport_dirn_int=0;
+    if (num_rows == 2 and num_cols == 2) {
+        // 2 ← 3 (vnet=2)      2 → 3 (vnet=3)
+        // ↓   ↑               ↑   ↓
+        // 0 → 1               0 ← 1 
+        // if (route.vnet == 2) {
+        //     if (my_id == 0)         outport_dirn = "East";
+        //     if (my_id == 1)         outport_dirn = "North";
+        //     if (my_id == 2)         outport_dirn = "South";
+        //     if (my_id == 3)         outport_dirn = "West";
+        // }
+        // else if (route.vnet == 3){
+        //     if (my_id == 0)         outport_dirn = "North";
+        //     if (my_id == 1)         outport_dirn = "West";
+        //     if (my_id == 2)         outport_dirn = "East";
+        //     if (my_id == 3)         outport_dirn = "South";
+        // } 
+        outport_dirn_int = route_table_2_2[route.vnet -2][my_id];
+    }
+    else if (num_rows == 4 and num_cols == 4) {
+        // 10 rings 4 vnets in total
+        outport_dirn_int = route_table_4_4[route.vnet -2][my_id];
+    }
 
-    // 2 → 3 (vnet=3)
-    // ↑   ↓
-    // 0 ← 1 
-    if (route.vnet == 2) {
-        if (my_id == 0)         outport_dirn = "East";
-        if (my_id == 1)         outport_dirn = "North";
-        if (my_id == 2)         outport_dirn = "South";
-        if (my_id == 3)         outport_dirn = "West";
-    }
-    else if (route.vnet == 3){
-        if (my_id == 0)         outport_dirn = "North";
-        if (my_id == 1)         outport_dirn = "West";
-        if (my_id == 2)         outport_dirn = "East";
-        if (my_id == 3)         outport_dirn = "South";
-    }
+    assert (outport_dirn_int!=0);
+    if  (outport_dirn_int == 1) outport_dirn = "North";
+    if  (outport_dirn_int == 2) outport_dirn = "South";
+    if  (outport_dirn_int == 3) outport_dirn = "West";
+    if  (outport_dirn_int == 4) outport_dirn = "East";
 
     std::cout << "outport_dirn" << outport_dirn << std::endl;
     return m_outports_dirn2idx[outport_dirn];

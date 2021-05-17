@@ -1,12 +1,12 @@
 ./build/Garnet_standalone/gem5.opt configs/example/garnet_synth_traffic.py \
 --network=garnet2.0 \
---num-cpus=64 \
---num-dirs=64 \
+--num-cpus=16 \
+--num-dirs=16 \
 --topology=Mesh_XY \
---mesh-rows=8 \
---sim-cycles=10000 \
---inj-vnet=4 \
---injectionrate=0.1 \
+--mesh-rows=4 \
+--sim-cycles=1000 \
+--inj-vnet=2 \
+--injectionrate=0.02 \
 --synthetic=uniform_random \
---routing-algorithm=xy \
---num_vnets=19
+--routing-algorithm=custom \
+--if_routerless=1

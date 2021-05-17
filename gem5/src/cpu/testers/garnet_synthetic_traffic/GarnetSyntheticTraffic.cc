@@ -92,6 +92,7 @@ GarnetSyntheticTraffic::GarnetSyntheticTraffic(const Params *p)
       trafficType(p->traffic_type),
       injRate(p->inj_rate),
       injVnet(p->inj_vnet),
+      if_routerless(p->if_routerless),
       precision(p->precision),
       responseLimit(p->response_limit),
       masterId(p->system->getMasterId(name()))
@@ -283,40 +284,21 @@ GarnetSyntheticTraffic::generatePkt()
     // Vnet 0 and 1 are for control packets (1-flit)
     // Vnet 2 is for data packets (5-flit)
     int injReqType = injVnet;
-
-    // for 2*2 routerless mesh test
-    // 2 ← 3 (vnet=2)
-    // ↓   ↑
-    // 0 → 1 
-
-    // 2 → 3 (vnet=3)
-    // ↑   ↓
-    // 0 ← 1 
-    if (id == 0) {
-        if      (destination == 0) injReqType = 2;
-        else if (destination == 1) injReqType = 2;
-        else if (destination == 2) injReqType = 3;
-        else if (destination == 3) injReqType = 3;
-    }
-    else if (id == 1) {
-        if      (destination == 0) injReqType = 3;
-        else if (destination == 1) injReqType = 2;
-        else if (destination == 2) injReqType = 3;
-        else if (destination == 3) injReqType = 2;
-    }
-
-    else if (id == 2) {
-        if      (destination == 0) injReqType = 2;
-        else if (destination == 1) injReqType = 2;
-        else if (destination == 2) injReqType = 3;
-        else if (destination == 3) injReqType = 3;
-    }
-
-    else if (id == 3) {
-        if      (destination == 0) injReqType = 3;
-        else if (destination == 1) injReqType = 3;
-        else if (destination == 2) injReqType = 2;
-        else if (destination == 3) injReqType = 2;
+    
+    // 依据节点数目+src+dst确定注入的Vnet id
+    // 如果是routerless设置，执行以下函数决定vnet；否则维持原始设置
+    if (if_routerless == 1) {
+        if (num_destinations==4) // 2*2 mesh
+            injReqType = vnet_table_2_2[source][destination] + 2;
+        else if (num_destinations==16) //4*4 mesh
+            injReqType = vnet_table_4_4[source][destination] + 2;
+        else if (num_destinations==36) //6*6 mesh
+            injReqType = vnet_table_6_6[source][destination] + 2;
+        else if (num_destinations==64) //8*8 mesh
+            injReqType = vnet_table_8_8[source][destination] + 2;
+        else {
+            std::cout << "routerless mesh size is not supported now" << std::endl;
+            assert(0);} 
     }
 
     if (injReqType==-1) // -1 代表random(0,2),其他代表自己本身

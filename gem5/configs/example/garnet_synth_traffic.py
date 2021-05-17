@@ -80,9 +80,8 @@ parser.add_option("--inj-vnet", type="int", default=-1,
                         0 and 1 are 1-flit, 2 is 5-flit.\
                         Set to -1 to inject randomly in all vnets.")
 
-parser.add_option("--num_vnets", type='int', default = 3,
-                  help="0,1 for config type, 2 & 2+ for data type"
-                  )
+
+parser.add_option("--if_routerless", type="int", default=0)
 
 #
 # Add the ruby specific and protocol specific options
@@ -114,6 +113,7 @@ cpus = [ GarnetSyntheticTraffic(
                      inj_rate=options.injectionrate,
                      inj_vnet=options.inj_vnet,
                      precision=options.precision,
+                     if_routerless = options.if_routerless,
                      num_dest=options.num_dirs) \
          for i in xrange(options.num_cpus) ]
 

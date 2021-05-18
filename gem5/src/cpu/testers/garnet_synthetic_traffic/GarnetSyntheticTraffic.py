@@ -51,6 +51,7 @@ class GarnetSyntheticTraffic(MemObject):
                               0 and 1 are 1-flit, 2 is 5-flit. \
                                 Default is to inject in all three vnets")
     if_routerless = Param.Int(0)
+    if_debug = Param.Int(0)
     precision = Param.Int(3, "Number of digits of precision \
                               after decimal point")
     response_limit = Param.Cycles(5000000, "Cycles before exiting \

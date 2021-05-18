@@ -86,16 +86,18 @@ NetworkInterface::init()
     }
     // read the network config and update num_cpus
     std::string file;
-	file = "./current_NoC_numCPUs.txt";
+	file = "./current_NoC_Configs.txt";
 	ifstream infile; 
     infile.open(file.data());  
     assert(infile.is_open());   
 
-    string s_num_cpus;
+    string s_num_cpus,s_if_debug;
     getline(infile,s_num_cpus);
+    getline(infile,s_if_debug);
 
     infile.close();             //关闭文件输入流 
     num_cpus=atoi(s_num_cpus.c_str());
+    if_debug=atoi(s_if_debug.c_str());
     //std::cout <<"in NI.cc the number of cpus=" << num_cpus<<std::endl;
 
 }
@@ -137,8 +139,7 @@ void
 NetworkInterface::addNode(vector<MessageBuffer *>& in,
                             vector<MessageBuffer *>& out)
 {
-    std::cout <<"fanxi added 0512 in NetworkInterface.cc, addNode, in.size()" <<in.size() <<std::endl;
-    std::cout <<"fanxi added 0512 in NetworkInterface.cc, addNode, out.size()" <<out.size() <<std::endl;
+    std::cout <<"in NetworkInterface.cc, addNode, in.size= " <<in.size() << " out.size= " <<out.size() <<std::endl;
 
     inNode_ptr = in;
     outNode_ptr = out;
@@ -203,13 +204,13 @@ NetworkInterface::incrementStats(flit *t_flit)
  * into the protocol buffer. It also checks for credits being sent by the
  * downstream router.
  */
-void update_recv_packets(int id,int num_recv_packet)
+void NetworkInterface::update_recv_packets(int id,int num_recv_packet)
 {
 	std::string file;
 	file = "./../run_info/node_recv/"+std::to_string(id)+".txt";
 	ofstream OutFile(file);
 	OutFile << std::to_string(num_recv_packet); 
-    std::cout<<"fanxi added, update_recv_packets ing, id= " << id <<" packets="<<num_recv_packet<<std::endl;
+    if (if_debug==1) std::cout<<"in NI.cc, update_recv_packets ing, id= " << id <<" packets="<<num_recv_packet<<std::endl;
 	OutFile.close();        
 }
 
@@ -268,7 +269,7 @@ NetworkInterface::wakeup()
                 // Update stats and delete flit pointer
                 incrementStats(t_flit);
                 num_recv_packet ++;
-                std::cout <<  "NI="  << m_id << "num_recv_packet = " << num_recv_packet << std::endl;
+                if (if_debug==1) std::cout <<  "NI = "  << m_id << " num_recv_packet = " << num_recv_packet << std::endl;
                 // # received packets ++ here
 				update_recv_packets(m_id-num_cpus, num_recv_packet); 
 

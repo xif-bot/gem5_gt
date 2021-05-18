@@ -53,6 +53,7 @@ class NetworkInterface : public ClockedObject, public Consumer
 {
   public:
     int num_cpus;
+    int if_debug;
     typedef GarnetNetworkInterfaceParams Params;
     NetworkInterface(const Params *p);
     ~NetworkInterface();
@@ -65,6 +66,7 @@ class NetworkInterface : public ClockedObject, public Consumer
 
     void dequeueCallback();
     void wakeup();
+    void update_recv_packets(int id,int num_recv_packet);
     void addNode(std::vector<MessageBuffer *> &inNode,
                  std::vector<MessageBuffer *> &outNode);
 

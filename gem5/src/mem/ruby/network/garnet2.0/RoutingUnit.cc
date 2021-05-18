@@ -32,7 +32,9 @@
 
 
 #include "mem/ruby/network/garnet2.0/RoutingUnit.hh"
-
+#include<fstream>
+#include<iostream>
+using namespace std;
 #include "base/cast.hh"
 #include "base/logging.hh"
 #include "mem/ruby/network/garnet2.0/InputUnit.hh"
@@ -41,7 +43,17 @@
 
 
 RoutingUnit::RoutingUnit(Router *router)
-{
+{   
+    std::cout << "fanxi added in RoutingUnit.cc,RoutingUnit newed" << std::endl;
+    std::string file;
+	file = "./current_NoC_Configs.txt";
+	ifstream infile; 
+    std::string s_if_debug;  
+    getline(infile,s_if_debug);
+    getline(infile,s_if_debug); // 第二行是if_debug信息
+
+    infile.close();             //关闭文件输入流 
+    if_debug=atoi(s_if_debug.c_str());
     m_router = router;
     m_routing_table.clear();
     m_weight_table.clear();
@@ -392,11 +404,12 @@ RoutingUnit::outportComputeCustom(RouteInfo route,
     int src_id = route.src_router;
     int dest_id = route.dest_router;
 
-    std::cout << "fanxi added in RoutingUnit.cc, in func outportComputeCustom" << std::endl;
-    std::cout << "route.vnet " << route.vnet << std::endl;
-    std::cout << "my_id " << my_id << std::endl;
-    std::cout << "src_id " << src_id << std::endl;
-    std::cout << "dest_id " << dest_id << std::endl;
+    if (if_debug ==1){
+        std::cout << "fanxi added in RoutingUnit.cc, in func outportComputeCustom" << std::endl;
+        std::cout << "route.vnet " << route.vnet << std::endl;
+        std::cout << "my_id " << my_id << std::endl;
+        std::cout << "src_id " << src_id << std::endl;
+        std::cout << "dest_id " << dest_id << std::endl; }
 
     PortDirection outport_dirn = "Unknown";
     int M5_VAR_USED num_rows = m_router->get_net_ptr()->getNumRows();
@@ -460,7 +473,7 @@ RoutingUnit::outportComputeCustom(RouteInfo route,
     if  (outport_dirn_int == 3) outport_dirn = "West";
     if  (outport_dirn_int == 4) outport_dirn = "East";
 
-    std::cout << "outport_dirn" << outport_dirn << std::endl;
+    if (if_debug ==1) std::cout << "outport_dirn" << outport_dirn << std::endl;
     return m_outports_dirn2idx[outport_dirn];
     
 

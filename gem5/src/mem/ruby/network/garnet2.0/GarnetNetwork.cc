@@ -125,7 +125,6 @@ GarnetNetwork::GarnetNetwork(const Params *p)
     }
 
     for (int i = 0 ; i < m_virtual_networks ; i++) {
-        std::cout << "fanxi added 0512 in GarnetNetwork.cc, m_vnet_type_names[" << i<< "]="<<m_vnet_type_names[i]<<std::endl;
 
         // fanxi modified 0522: change all vnet to data type 
         // vnet 0和1维持control type，2及以后都是data type
@@ -134,7 +133,7 @@ GarnetNetwork::GarnetNetwork(const Params *p)
             m_vnet_type[i] = DATA_VNET_; // carries data (and ctrl) packets
         else
             m_vnet_type[i] = CTRL_VNET_; // carries only ctrl packets
-        std::cout << "fanxi added 0512 in GarnetNetwork.cc, m_vnet_type[" << i<< "]="<<m_vnet_type[i]<<std::endl;
+        std::cout << "in GarnetNetwork.cc, m_vnet_type_names[" << i << "]= "<<m_vnet_type_names[i] << " m_vnet_type[" << i<< "]="<<m_vnet_type[i]<<std::endl;
 
     }
 

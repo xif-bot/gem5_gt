@@ -145,6 +145,7 @@ class GarnetSyntheticTraffic : public MemObject
     double injRate;
     int injVnet;
     int if_routerless;
+    int if_debug;
     std::string dnn_task;
     int precision;
 
@@ -153,6 +154,7 @@ class GarnetSyntheticTraffic : public MemObject
     MasterID masterId;
 
     void completeRequest(PacketPtr pkt);
+    int recv_packets(int id);
 
     void generatePkt(int send_dst);
     void sendPkt(PacketPtr pkt);

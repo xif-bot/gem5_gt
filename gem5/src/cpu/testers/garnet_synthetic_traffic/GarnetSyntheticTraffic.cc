@@ -62,6 +62,15 @@
 # define WORK_SEND          (int(5))
 # define WORK_IDLE          (int(6))
 
+std::string all_status[7] =
+{   "IDLE",
+    "WORK",
+    "FINISH",
+    "WORK_WAIT",
+    "WORK_CAL",
+    "WORK_SEND",
+    "WORK_IDLE" };
+
 using namespace std;
 
 int TESTER_NETWORK=0;
@@ -107,6 +116,7 @@ GarnetSyntheticTraffic::GarnetSyntheticTraffic(const Params *p)
       injRate(p->inj_rate),
       injVnet(p->inj_vnet),
       if_routerless(p->if_routerless),
+      if_debug(p->if_debug),
       dnn_task(p->dnn_task),
       precision(p->precision),
       responseLimit(p->response_limit),
@@ -148,6 +158,7 @@ void
 GarnetSyntheticTraffic::init()
 {   
     cpu_status = IDLE;
+    cpu_work_stats = WORK_IDLE;
     numPacketsSent = 0;
     current_line_num = 0;
     init_recv_packet_files(id);
@@ -175,7 +186,7 @@ GarnetSyntheticTraffic::completeRequest(PacketPtr pkt)
     delete pkt;
 }
 
-int recv_packets(int id)
+int GarnetSyntheticTraffic::recv_packets(int id)
 {
 	std::string file;
 	file = "./../run_info/node_recv/"+std::to_string(id)+".txt";
@@ -186,7 +197,8 @@ int recv_packets(int id)
     string s;
     while(getline(infile,s))
     {
-        std::cout<<"fanxi added, recv_packets ing, id= " << id <<" packets="<<s<<std::endl;
+        if(if_debug==1) 
+            std::cout<<"node " << id <<" is recv_packets ing, packets="<< s <<std::endl;
     }
     infile.close();             //关闭文件输入流 
     return atoi(s.c_str());
@@ -216,7 +228,7 @@ int GarnetSyntheticTraffic::get_task(int id,int line_num)
         return 0;
     }
     else {
-        std::cout<<"fanxi added, get_task, id= " << id <<" linenum=" <<line_num << " task ="<< current_task_line <<std::endl;
+        if(if_debug==1) std::cout<<"node " << id <<" is get_task ing, linenum = " <<line_num << " the task = "<< current_task_line <<std::endl;
         return 1;   
     }
 
@@ -258,7 +270,7 @@ void GarnetSyntheticTraffic::tell_mem_send_data(std::string src_mem_index,std::s
 	f.open(file,ios::out|ios::app);
     f<<message_to_write<<endl; 
     f.close(); 
-    std::cout<<"fanxi added, tell_mem_send_data ing, id= " << id << std::endl;
+    if(if_debug==1) std::cout<<"node "<< id << "is tell_mem_send_data ing" <<  std::endl;
 }
 
 
@@ -267,11 +279,12 @@ GarnetSyntheticTraffic::tick()
 {      
     bool sendAllowedThisCycle = false;
     if (traffic == DNN_) {
-        std::cout << "cpu id"<<id<<" status:" << cpu_status <<" current_line_num:"<< current_line_num << std::endl;
-        std::cout << "cpu id"<<id<<" cpu_work_stats:" << cpu_work_stats <<std::endl;
+        if(if_debug==1) std::cout << "node "<<id<<"\tstatus: " << all_status[cpu_status] \
+                                  << "\twork_stats: " << all_status[cpu_work_stats] \
+                                  << "\tline_num:"<< current_line_num << "\t@"<< curTick() << std::endl;
 
         int if_get_task;
-        
+
         // idle status : read task file
         if (cpu_status == IDLE){
             if_get_task = get_task(id, current_line_num);
@@ -287,7 +300,7 @@ GarnetSyntheticTraffic::tick()
                 current_task  = split(current_task_line," ");
 
                 if (current_task[0] == "wait"){
-                    std::cout << "== wait" << std::endl;
+                    if(if_debug==1) std::cout << "current_task == wait" << std::endl;
                     cpu_status = WORKIING;
                     cpu_work_stats = WORK_WAIT;
                     num_packet_wait = atoi(current_task[1].c_str());
@@ -296,7 +309,7 @@ GarnetSyntheticTraffic::tick()
                     // tell_mem_send_data(str_src_mem_index,  str_num_wait_packets,  id);
                 }
                 else if (current_task[0] == "cal"){
-                    std::cout << "== cal" << std::endl;
+                    if(if_debug==1) std::cout << "current_task == cal" << std::endl;
                     cpu_status = WORKIING;
                     cpu_work_stats = WORK_CAL;
 
@@ -306,7 +319,7 @@ GarnetSyntheticTraffic::tick()
                     cycles_caled = 0;
                 }
                 else if (current_task[0] == "send"){
-                    std::cout << "== send" << std::endl;
+                    if(if_debug==1) std::cout << "current_task == send" << std::endl;
                     cpu_status = WORKIING;
                     cpu_work_stats = WORK_SEND;
                     packets_to_send = atoi(current_task[2].c_str());
@@ -316,7 +329,7 @@ GarnetSyntheticTraffic::tick()
                 else if (strstr(current_task[0].c_str(), "finish") != NULL ) { // 最后一行current_task[0]会多一个终结符
                     cpu_status = FINISH;
                     cpu_work_stats = WORK_IDLE;
-                    std::cout << "cpu "<< id << " finished all tasks" << "@"<< curTick() << std::endl;
+                    std::cout << "cpu "<< id << " finished all " << "@ "<< curTick() << std::endl;
                 }
             }
         }

@@ -46,6 +46,7 @@ class Router;
 class RoutingUnit
 {
   public:
+    int if_debug;
     RoutingUnit(Router *router);
     int outportCompute(RouteInfo route,
                       int inport,

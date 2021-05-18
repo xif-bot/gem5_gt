@@ -86,6 +86,8 @@ parser.add_option("--link_width_bits", type="int", default=128,
 
 parser.add_option("--if_routerless", type="int", default=0)
 
+parser.add_option("--if_debug", type="int", default=0)
+
 parser.add_option("--dnn_task", type="string", default="lenet_16")
 
 #
@@ -121,8 +123,9 @@ for node in range(0, options.num_cpus):
     f.close()
 
 
-with open ("./current_NoC_numCPUs.txt","w") as f:
-      f.write(str(options.num_cpus))
+with open ("./current_NoC_Configs.txt","w") as f:
+      f.write(str(options.num_cpus)+"\n")
+      f.write(str(options.if_debug)+"\n")
       f.close()
 
 cpus = [ GarnetSyntheticTraffic(
@@ -135,6 +138,7 @@ cpus = [ GarnetSyntheticTraffic(
                      inj_vnet=options.inj_vnet,
                      precision=options.precision,
                      if_routerless = options.if_routerless,
+                     if_debug = options.if_debug,
                      dnn_task = options.dnn_task,
                      num_dest=options.num_dirs) \
          for i in xrange(options.num_cpus) ]

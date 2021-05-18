@@ -11,4 +11,5 @@
 --dnn_task=lenet_16 \
 --routing-algorithm=xy \
 --if_routerless=0 \
---link_width_bits=128
+--link_width_bits=128 \
+--if_debug=0

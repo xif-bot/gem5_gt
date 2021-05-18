@@ -107,6 +107,7 @@ GarnetSyntheticTraffic::GarnetSyntheticTraffic(const Params *p)
       injRate(p->inj_rate),
       injVnet(p->inj_vnet),
       if_routerless(p->if_routerless),
+      dnn_task(p->dnn_task),
       precision(p->precision),
       responseLimit(p->response_limit),
       masterId(p->system->getMasterId(name()))
@@ -177,7 +178,7 @@ GarnetSyntheticTraffic::completeRequest(PacketPtr pkt)
 int recv_packets(int id)
 {
 	std::string file;
-	file = "./../recv/"+std::to_string(id)+".txt";
+	file = "./../run_info/node_recv/"+std::to_string(id)+".txt";
 	ifstream infile; 
     infile.open(file.data());  
     assert(infile.is_open());   
@@ -197,7 +198,7 @@ int recv_packets(int id)
 int GarnetSyntheticTraffic::get_task(int id,int line_num)
 {
 	std::string file;
-	file = "./../cpu_task/"+std::to_string(id)+".txt";
+	file = "./../dnn_task/"+dnn_task+"/"+std::to_string(id)+".txt";
 	ifstream infile; 
     infile.open(file.data());  
     assert(infile.is_open());   
@@ -242,10 +243,11 @@ vector<string> split(const string &str, const string &pattern)
     return res;
 }
 
-void tell_mem_send_data(std::string src_mem_index,std::string num_wait_packets,int id) 
+// current not used 
+void GarnetSyntheticTraffic::tell_mem_send_data(std::string src_mem_index,std::string num_wait_packets,int id) 
 {
 	std::string file;
-	file = "./../cpu_task/"+src_mem_index+".txt";
+	file = "./../dnn_task/"+dnn_task+"/"+src_mem_index+".txt";
     fstream f;
 
     std::string message_to_write = "send ";
@@ -290,8 +292,8 @@ GarnetSyntheticTraffic::tick()
                     cpu_work_stats = WORK_WAIT;
                     num_packet_wait = atoi(current_task[1].c_str());
                     std::string str_num_wait_packets = current_task[1];
-                    std::string str_src_mem_index = current_task[2];
-                    tell_mem_send_data(str_src_mem_index,  str_num_wait_packets,  id);
+                    // std::string str_src_mem_index = current_task[2];
+                    // tell_mem_send_data(str_src_mem_index,  str_num_wait_packets,  id);
                 }
                 else if (current_task[0] == "cal"){
                     std::cout << "== cal" << std::endl;

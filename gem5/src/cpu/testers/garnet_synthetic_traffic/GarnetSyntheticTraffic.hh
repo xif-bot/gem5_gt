@@ -69,6 +69,7 @@ class GarnetSyntheticTraffic : public MemObject
     std::string current_task_line;
     int current_line_num;
     int get_task(int id,int line_num);
+    void tell_mem_send_data(std::string src_mem_index,std::string num_wait_packets,int id);
 
     typedef GarnetSyntheticTrafficParams Params;
     GarnetSyntheticTraffic(const Params *p);
@@ -144,6 +145,7 @@ class GarnetSyntheticTraffic : public MemObject
     double injRate;
     int injVnet;
     int if_routerless;
+    std::string dnn_task;
     int precision;
 
     const Cycles responseLimit;

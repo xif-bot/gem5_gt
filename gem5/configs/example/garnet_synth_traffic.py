@@ -86,6 +86,8 @@ parser.add_option("--link_width_bits", type="int", default=128,
 
 parser.add_option("--if_routerless", type="int", default=0)
 
+parser.add_option("--dnn_task", type="string", default="lenet_16")
+
 #
 # Add the ruby specific and protocol specific options
 #
@@ -106,6 +108,18 @@ if args:
 #            % (options.inj_vnet)
 #     sys.exit(1)
 
+# file initialization
+node_recv_path = "../run_info/node_recv/"
+
+for i in os.listdir(node_recv_path):
+   path_file = os.path.join(node_recv_path,i)
+   if os.path.isfile(path_file):
+      os.remove(path_file)
+
+for node in range(0, options.num_cpus):
+    f = open (node_recv_path + str(node)+".txt",'w')
+    f.close()
+
 
 with open ("./current_NoC_numCPUs.txt","w") as f:
       f.write(str(options.num_cpus))
@@ -121,6 +135,7 @@ cpus = [ GarnetSyntheticTraffic(
                      inj_vnet=options.inj_vnet,
                      precision=options.precision,
                      if_routerless = options.if_routerless,
+                     dnn_task = options.dnn_task,
                      num_dest=options.num_dirs) \
          for i in xrange(options.num_cpus) ]
 

@@ -45,6 +45,7 @@ class GarnetSyntheticTraffic(MemObject):
     single_dest = Param.Int(-1, "Send only to this dest. \
                                  Default depends on traffic_type")
     traffic_type = Param.String("uniform_random", "Traffic type")
+    dnn_task = Param.String("lenet_16")
     inj_rate = Param.Float(0.1, "Packet injection rate")
     inj_vnet = Param.Int(-1, "Vnet to inject in. \
                               0 and 1 are 1-flit, 2 is 5-flit. \

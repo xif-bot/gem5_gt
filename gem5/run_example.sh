@@ -7,7 +7,8 @@
 --sim-cycles=1000 \
 --inj-vnet=2 \
 --injectionrate=0.02 \
---synthetic=uniform_random \
+--synthetic=DNN \
+--dnn_task=lenet_16 \
 --routing-algorithm=xy \
 --if_routerless=0 \
 --link_width_bits=128

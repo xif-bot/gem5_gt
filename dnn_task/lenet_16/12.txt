@@ -1,0 +1,9 @@
+wait 10
+cal 9
+finish_pic
+wait 10
+cal 9
+finish_pic
+wait 10
+cal 9
+finish 

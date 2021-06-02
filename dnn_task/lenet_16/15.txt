@@ -1,0 +1,13 @@
+wait 14
+cal 54
+send 12 5
+finish_pic
+wait 14
+cal 54
+send 12 5
+finish_pic
+wait 14
+cal 54
+wait_cmd 12
+send 12 5
+finish

@@ -48,6 +48,7 @@ RoutingUnit::RoutingUnit(Router *router)
     std::string file;
 	file = "./current_NoC_Configs.txt";
 	ifstream infile; 
+    infile.open(file.data());
     std::string s_if_debug;  
     getline(infile,s_if_debug);
     getline(infile,s_if_debug); // 第二行是if_debug信息

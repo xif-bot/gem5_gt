@@ -1,0 +1,19 @@
+wait 88
+cal 520
+send 11 9
+send 7 9
+finish_pic
+wait 88
+cal 520
+send 11 9
+send 7 9
+finish_pic
+wait 88
+cal 520
+wait_cmd 11
+wait_cmd 7
+send 11 9
+send 7 9
+finish
+
+

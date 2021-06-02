@@ -112,6 +112,7 @@ if args:
 
 # file initialization
 node_recv_path = "../run_info/node_recv/"
+node_cur_pic_path = "../run_info/cur_pic_num/"
 
 for i in os.listdir(node_recv_path):
    path_file = os.path.join(node_recv_path,i)
@@ -122,6 +123,15 @@ for node in range(0, options.num_cpus):
     f = open (node_recv_path + str(node)+".txt",'w')
     f.close()
 
+for i in os.listdir(node_cur_pic_path):
+   path_file = os.path.join(node_cur_pic_path,i)
+   if os.path.isfile(path_file):
+      os.remove(path_file)
+
+for node in range(0, options.num_cpus):
+    f = open (node_cur_pic_path + str(node)+".txt",'w')
+    f.write("0")
+    f.close()
 
 with open ("./current_NoC_Configs.txt","w") as f:
       f.write(str(options.num_cpus)+"\n")

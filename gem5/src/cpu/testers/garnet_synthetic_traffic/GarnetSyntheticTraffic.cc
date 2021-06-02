@@ -61,15 +61,17 @@
 # define WORK_CAL           (int(4))
 # define WORK_SEND          (int(5))
 # define WORK_IDLE          (int(6))
+# define WORK_WAIT_CMD      (int(7))
 
-std::string all_status[7] =
+std::string all_status[8] =
 {   "IDLE",
     "WORK",
     "FINISH",
     "WORK_WAIT",
     "WORK_CAL",
     "WORK_SEND",
-    "WORK_IDLE" };
+    "WORK_IDLE",
+    "WORK_WAIT_CMD" };
 
 using namespace std;
 
@@ -153,7 +155,6 @@ void init_recv_packet_files(int id){
 	OutFile << std::to_string(0); 
     OutFile.close();    
 }
-
 void
 GarnetSyntheticTraffic::init()
 {   
@@ -161,7 +162,13 @@ GarnetSyntheticTraffic::init()
     cpu_work_stats = WORK_IDLE;
     numPacketsSent = 0;
     current_line_num = 0;
+    cur_pic = 0;
+    num_recv_cmd_packet = 0;
     init_recv_packet_files(id);
+    time_cal = 0;
+    time_wait = 0;
+    time_wait_cmd = 0;
+    time_send = 0;
 
     // get current working path 
     char cwd[100];
@@ -205,6 +212,33 @@ int GarnetSyntheticTraffic::recv_packets(int id)
 }
 
 
+int GarnetSyntheticTraffic::check_downstream(int id)
+{
+	std::string file;
+	file = "./../run_info/cur_pic_num/"+std::to_string(id)+".txt";
+	ifstream infile; 
+    infile.open(file.data());  
+    assert(infile.is_open());   
+
+    string s;
+    while(getline(infile,s))
+    {
+        if(if_debug==1) 
+            std::cout<<"node " << id <<" is checked pic id ="<< s <<std::endl;
+    }
+    infile.close();             //关闭文件输入流 
+    return atoi(s.c_str());
+}
+
+
+void GarnetSyntheticTraffic::update_cur_pic(int id, int cur_pic_id)
+{
+    std::string file;
+	file = "./../run_info/cur_pic_num/"+std::to_string(id)+".txt";
+    ofstream OutFile(file);
+	OutFile << std::to_string(cur_pic_id); 
+    OutFile.close();   
+}
 
 // 1代表读到task 0 代表没有读到，文件结束
 int GarnetSyntheticTraffic::get_task(int id,int line_num)
@@ -228,7 +262,7 @@ int GarnetSyntheticTraffic::get_task(int id,int line_num)
         return 0;
     }
     else {
-        if(if_debug==1) std::cout<<"node " << id <<" is get_task ing, linenum = " <<line_num << " the task = "<< current_task_line <<std::endl;
+        if (if_debug==1) std::cout<<"node " << id <<" start do linenum = " <<line_num << " the task = "<< current_task_line << " @ " << curTick() <<std::endl;
         return 1;   
     }
 
@@ -300,7 +334,7 @@ GarnetSyntheticTraffic::tick()
                 current_task  = split(current_task_line," ");
 
                 if (current_task[0] == "wait"){
-                    if(if_debug==1) std::cout << "current_task == wait" << std::endl;
+                    if(if_debug==1) std::cout << "node " << id  << "current_task == wait" << std::endl;
                     cpu_status = WORKIING;
                     cpu_work_stats = WORK_WAIT;
                     num_packet_wait = atoi(current_task[1].c_str());
@@ -309,7 +343,7 @@ GarnetSyntheticTraffic::tick()
                     // tell_mem_send_data(str_src_mem_index,  str_num_wait_packets,  id);
                 }
                 else if (current_task[0] == "cal"){
-                    if(if_debug==1) std::cout << "current_task == cal" << std::endl;
+                    if(if_debug==1) std::cout << "node " << id  << " current_task == cal" << std::endl;
                     cpu_status = WORKIING;
                     cpu_work_stats = WORK_CAL;
 
@@ -319,17 +353,46 @@ GarnetSyntheticTraffic::tick()
                     cycles_caled = 0;
                 }
                 else if (current_task[0] == "send"){
-                    if(if_debug==1) std::cout << "current_task == send" << std::endl;
+                    if(if_debug==1) std::cout << "node " << id << " current_task == send" << std::endl;
                     cpu_status = WORKIING;
                     cpu_work_stats = WORK_SEND;
                     packets_to_send = atoi(current_task[2].c_str());
                     send_dst = atoi(current_task[1].c_str());
                     packets_sent = 0;
                 }
-                else if (strstr(current_task[0].c_str(), "finish") != NULL ) { // 最后一行current_task[0]会多一个终结符
-                    cpu_status = FINISH;
+                else if (current_task[0] == "wait_cmd"){
+                    if(if_debug==1) std::cout << "node " << id << " current_task == wait_cmd" << std::endl;
+                    cpu_status = WORKIING;
+                    cpu_work_stats = WORK_WAIT_CMD;
+                    downstream_id = atoi(current_task[1].c_str());       
+                }
+                else if (strstr(current_task[0].c_str(), "finish_pic") != NULL ) { // 最后一行current_task[0]会多一个终结符
+                    if(if_debug==1) std::cout << "node " << id <<  " current_task == finish_pic" << std::endl;
+                    cur_pic += 1;
+                    cpu_status = IDLE;
                     cpu_work_stats = WORK_IDLE;
-                    std::cout << "cpu "<< id << " finished all " << "@ "<< curTick() << std::endl;
+                    std::cout << "cpu "<< id << " finished all " << "@ "<< curTick() << " cur_pic=" << cur_pic \
+                     << " time cal=" << time_cal << " wait=" << time_wait << " wait_cmd=" <<time_wait_cmd <<" send=" <<  time_send << std::endl;
+                    Repeat_Start_line = current_line_num;
+                    update_cur_pic(id, cur_pic);
+                    time_cal = 0;
+                    time_wait = 0;
+                    time_wait_cmd = 0;
+                    time_send = 0;
+                }
+                else if (strstr(current_task[0].c_str(), "finish") != NULL ) { // 最后一行current_task[0]会多一个终结符
+                    if(if_debug==1) std::cout << "node " << id <<  " current_task == finish" << std::endl;
+                    cpu_status = IDLE;
+                    cpu_work_stats = WORK_IDLE;
+                    current_line_num = Repeat_Start_line;
+                    cur_pic += 1;
+                    std::cout << "cpu "<< id << " finished all " << "@ "<< curTick() << " cur_pic=" << cur_pic \
+                     << " time cal=" << time_cal << " wait=" << time_wait << " wait_cmd=" <<time_wait_cmd <<" send=" <<  time_send << std::endl;
+                    update_cur_pic(id, cur_pic);
+                    time_cal = 0;
+                    time_wait = 0;
+                    time_wait_cmd = 0;
+                    time_send = 0;
                 }
             }
         }
@@ -337,16 +400,27 @@ GarnetSyntheticTraffic::tick()
         // working status
         else if (cpu_status == WORKIING){
             if (cpu_work_stats == WORK_WAIT){
+                time_wait += 1;
                 int packet_recv = recv_packets(id) - total_packet_recv_previous;
-                if (packet_recv == num_packet_wait){
+                if (packet_recv >= num_packet_wait){
                     cpu_work_stats = WORK_IDLE;
                     cpu_status = IDLE;
                     total_packet_recv_previous += packet_recv;
                 }
                 // 否则维持wait状态
             }
+            else if (cpu_work_stats == WORK_WAIT_CMD){
+                time_wait_cmd += 1;
+                int downstream_cur_pic = check_downstream(downstream_id);
+                assert ( downstream_cur_pic <= cur_pic );
+                if (downstream_cur_pic >= cur_pic-1){
+                    cpu_work_stats = WORK_IDLE; //继续读下一条指令
+                    cpu_status = IDLE;
+                }
+            }
             else if (cpu_work_stats == WORK_SEND){
-                if (packets_sent == packets_to_send){  //TODO ++ packets_sent
+                time_send+=1;
+                if (packets_sent == packets_to_send){  
                     cpu_work_stats = WORK_IDLE;
                     cpu_status = IDLE;
                 }
@@ -356,6 +430,7 @@ GarnetSyntheticTraffic::tick()
             }
 
             else if (cpu_work_stats == WORK_CAL){
+                time_cal +=1;
                 if (cycles_caled == cal_cycles){
                     cpu_work_stats = WORK_IDLE;
                     cpu_status = IDLE;
@@ -428,7 +503,10 @@ GarnetSyntheticTraffic::generatePkt(int send_dst)
     {
         destination = singleDest;
     } else if (traffic == UNIFORM_RANDOM_) {
-        destination = random_mt.random<unsigned>(0, num_destinations - 1);
+        destination = random_mt.random<unsigned>(0, num_destinations - 1); 
+        while (destination == id){
+            destination = random_mt.random<unsigned>(0, num_destinations - 1); 
+        }
     } else if (traffic == BIT_COMPLEMENT_) {
         dest_x = radix - src_x - 1;
         dest_y = radix - src_y - 1;

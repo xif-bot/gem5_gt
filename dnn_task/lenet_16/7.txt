@@ -1,0 +1,17 @@
+wait 27
+cal 164
+send 3 7
+send 15 7
+finish_pic
+wait 27
+cal 164
+send 3 7
+send 15 7
+finish_pic
+wait 27
+cal 164
+wait_cmd 3
+wait_cmd 15
+send 3 7
+send 15 7
+finish

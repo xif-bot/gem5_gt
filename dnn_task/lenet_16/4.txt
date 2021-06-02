@@ -1,0 +1,18 @@
+cal 113
+send 6 11
+send 9 11
+send 5 11
+finish_pic
+cal 113
+send 6 11
+send 9 11
+send 5 11
+finish_pic
+cal 113
+wait_cmd 5
+wait_cmd 6
+wait_cmd 9
+send 6 11
+send 9 11
+send 5 11
+finish

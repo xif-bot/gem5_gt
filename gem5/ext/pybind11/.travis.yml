@@ -189,7 +189,7 @@ install:
 
     export NPY_NUM_BUILD_JOBS=2
     echo "Installing pytest, numpy, scipy..."
-    ${PYPY:+travis_wait 30} $PY_CMD -m pip install --user --upgrade pytest numpy scipy \
+    ${PYPY:+travis_wait_cmd 30} $PY_CMD -m pip install --user --upgrade pytest numpy scipy \
         ${PYPY:+--extra-index-url https://imaginary.ca/trusty-pypi}
     echo "done."
 

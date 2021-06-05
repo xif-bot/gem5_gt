@@ -33,3 +33,6 @@ gem5/configs/dram/lowp_sweep.cfg
 m5out/*
 log.txt
 gem5/network_stats*
+
+./run_info/cur_pic_num/*
+./run_info/node_recv/*

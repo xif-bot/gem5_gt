@@ -11,7 +11,8 @@ This repo is used for implement and test the routerless NoC.
 
 文件管理：
 
-1) Fixed: gem5_gt/run_info/node_recv/ 用于记录每node的接收packet信息。运行时会自动生成空txt
+1) Fixed: gem5_gt/run_info/node_recv/ 用于记录每node的接收packet信息。运行时会自动生成空txt;
+gem5_gt/run_info/cur_pic_num/ 用于记录每个节点当前finish的图片id。
 
 2) Configurable: --dnn_task=the_dnn_task,  the_dnn_task 文件位于gem5_gt/dnn_task/the_dnn_task
 

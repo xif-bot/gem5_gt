@@ -12,8 +12,6 @@ one_pic_time = []
 
 with open (logfile,'r') as file:
     for line in file.readlines():
-        print (line)
-        print (match_line)
         if match_line in line:
             line_content = line.split()
             finish_time.append(int(line_content[5]))
@@ -32,3 +30,8 @@ print (one_pic_time)
 plt.plot(one_pic_time)
 plt.ylabel('one pic processing time')
 plt.show()
+print ("pic_processed = ",len(finish_time))
+throughput = (finish_time[-1]-finish_time[0])/ (len(finish_time)-1)
+latency =  finish_time[0] #只是第一张延迟，不是平均每张的
+print ("throughput=",throughput)
+print ("latency=",latency)

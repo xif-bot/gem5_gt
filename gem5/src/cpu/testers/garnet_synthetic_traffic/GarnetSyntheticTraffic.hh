@@ -81,7 +81,7 @@ class GarnetSyntheticTraffic : public MemObject
     int time_wait  ;
     int time_wait_cmd  ;
     int time_send ;
-
+    
     typedef GarnetSyntheticTrafficParams Params;
     GarnetSyntheticTraffic(const Params *p);
 
